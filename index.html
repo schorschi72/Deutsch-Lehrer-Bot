@@ -1804,14 +1804,14 @@ function checkVocabAnswer(spoken) {
     fb.style.color = '#34D399';
     fb.style.border = '1px solid #10B98155';
     fb.innerHTML = `✓ Correct! <span style="font-weight:400">${escHtml(v.translation)}</span> <span style="font-size:12px;opacity:0.8">${countLabel}</span>`;
-    speak('Correct!'); setTimeout(() => speakDE(v.translation), 700);
+    speakEN('Correct!'); setTimeout(() => speak(v.translation), 700);
     setTimeout(() => markCard(true), 1400);
   } else {
     fb.style.background = '#450A0A55';
     fb.style.color = '#FCA5A5';
     fb.style.border = '1px solid #EF444455';
     fb.innerHTML = '✗ Not quite — the answer is: <span style="color:white;font-weight:700">' + escHtml(v.translation) + '</span>';
-    speak('Not quite. The answer is:'); setTimeout(() => speakDE(v.translation), 900);
+    speakEN('Not quite. The answer is:'); setTimeout(() => speak(v.translation), 900);
     document.getElementById('vocabActions').style.display = 'flex';
     document.getElementById('vocabVoiceArea').style.display = 'none';
   }
@@ -2869,7 +2869,7 @@ function showVocabQuizQuestion() {
       ${escHtml(opt)}
     </button>`).join('');
 
-  if (ttsEnabled) speakDE(q.translation, 1.0);
+  if (ttsEnabled) speak(q.translation, 1.0);
 }
 
 function answerVocabQuiz(chosen, correct) {
