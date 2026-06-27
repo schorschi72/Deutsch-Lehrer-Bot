@@ -1086,18 +1086,35 @@ function speak(text, rate = 0.95) {
   }
 }
 
-// speakDE() / speakEN() = English (native language of the learner)
-function speakDE(text, rate = 0.95) {
+// speakEN() = English voice (native language of the learner)
+function speakEN(text, rate = 0.95) {
   if (!window.speechSynthesis || !ttsEnabled) return;
+  const clean = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  if (!clean) return;
   speechSynthesis.cancel();
-  const utt = new SpeechSynthesisUtterance(text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
+  // iOS: voices load late — try to find English voice on-demand
+  if (isIOS && !ttsVoiceDE) {
+    const v = speechSynthesis.getVoices();
+    ttsVoiceDE = v.find(x => x.lang === 'en-GB') ||
+                 v.find(x => x.lang === 'en-US') ||
+                 v.find(x => x.lang.startsWith('en-')) || null;
+  }
+  const utt = new SpeechSynthesisUtterance(clean);
   utt.lang = 'en-US';
   utt.rate = rate;
   utt.pitch = 1;
   if (ttsVoiceDE) utt.voice = ttsVoiceDE;
+  if (isIOS) { speechSynthesis.resume(); }
   speechSynthesis.speak(utt);
+  if (isIOS) {
+    const keepalive = setInterval(() => {
+      if (!speechSynthesis.speaking) { clearInterval(keepalive); return; }
+      speechSynthesis.pause(); speechSynthesis.resume();
+    }, 10000);
+    utt.onend = () => clearInterval(keepalive);
+  }
 }
-const speakEN = speakDE;
+const speakDE = speakEN;
 
 function speakMsg(btn, text) {
   if (window.speechSynthesis?.speaking) { speechSynthesis.cancel(); btn.classList.remove('speaking'); return; }
@@ -2067,11 +2084,11 @@ function showGrammarQuestion() {
   const q = grammarQuestions[grammarIdx];
   area.innerHTML = `
     <div class="card" style="gap:12px;display:flex;flex-direction:column">
-      <div style="font-size:12px;color:var(--text-muted)">Question ${grammarIdx + 1} of ${total}</div>
+      <div style="font-size:12px;color:var(--text-muted)">Frage ${grammarIdx + 1} von ${total}</div>
       <div class="quiz-question">${escHtml(q.question)}</div>
       <div class="options">${q.options.map((opt, i) => `<button class="option-btn" onclick="answerGrammar(${i})">${escHtml(opt)}</button>`).join('')}</div>
     </div>`;
-  if (ttsEnabled) speak(q.question.replace(/_+/g, 'blank'));
+  if (ttsEnabled) speakEN(q.question.replace(/_+/g, 'blank'));
 }
 
 function renderTopicGrid(containerId, fillMode = false) {
