@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Deutsch Bot">
 <meta name="color-scheme" content="dark">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%234F46E5'/><text y='.9em' font-size='75' x='10'>🇩🇪</text></svg>">
-<title>German Learning Bot</title>
+<title>Deutsch Lernen</title>
 <style>
   :root {
     --primary: #4F46E5;
@@ -385,8 +385,8 @@
       </div>
     </div>
     <div class="chat-input-row">
-      <button class="icon-btn" id="chatMicBtn" onclick="toggleChatMic()" title="Speak instead of typing">🎤</button>
-      <textarea id="chatInput" placeholder="Type or speak in German..." rows="1"
+      <button class="icon-btn" id="chatMicBtn" onclick="toggleChatMic()" title="Sprechen statt tippen">🎤</button>
+      <textarea id="chatInput" placeholder="Auf Deutsch tippen oder sprechen…" rows="1"
         onkeydown="handleChatKey(event)" oninput="autoResize(this)"
         autocorrect="off" autocapitalize="none" spellcheck="false"
         inputmode="text" enterkeyhint="send"></textarea>
@@ -446,8 +446,8 @@
     <div class="card">
       <div class="section-title" style="margin-bottom:10px">Wort hinzufügen</div>
       <div style="display:flex;flex-direction:column;gap:8px">
-        <input id="newWord" placeholder="English word or phrase" />
-        <input id="newTranslation" placeholder="German translation" />
+        <input id="newWord" placeholder="Englisches Wort oder Phrase" />
+        <input id="newTranslation" placeholder="Deutsche Übersetzung" />
         <button class="btn" onclick="addVocab()">+ Hinzufügen</button>
         <button class="btn secondary" onclick="generateVocab(this)">✨ KI: 5 Wörter vorschlagen</button>
       </div>
@@ -553,7 +553,7 @@
       </div>
       <div class="card" id="buildLoadingCard" style="display:none;text-align:center;padding:24px;flex-direction:column;gap:10px;align-items:center">
         <div class="spinner" style="width:32px;height:32px;border-width:4px"></div>
-        <div style="font-size:14px;color:var(--text-muted)">Generating sentence…</div>
+        <div style="font-size:14px;color:var(--text-muted)">Satz wird erstellt…</div>
       </div>
       <div class="card" id="buildCard" style="display:none;flex-direction:column;gap:14px">
         <div style="display:flex;align-items:center;justify-content:space-between">
@@ -587,7 +587,7 @@
           <button class="btn secondary" style="font-size:12px;padding:5px 10px" onclick="setWritePrompt('Schreib auf Deutsch deine Meinung zu sozialen Medien.')">Meinung</button>
         </div>
         <div id="writePromptHint" style="font-size:13px;color:var(--primary-light);display:none"></div>
-        <textarea class="write-area" id="writeInput" placeholder="Write your text here in German…" oninput="writeInputChanged()"></textarea>
+        <textarea class="write-area" id="writeInput" placeholder="Schreib hier deinen deutschen Text…" oninput="writeInputChanged()"></textarea>
         <div style="display:flex;justify-content:space-between;align-items:center">
           <span id="writeWordCount" style="font-size:12px;color:var(--text-muted)">0 Wörter</span>
           <button class="btn" id="writeCheckBtn" onclick="checkWriting()" disabled>✓ Text korrigieren</button>
@@ -629,7 +629,7 @@
       </div>
       <div class="card" id="dictLoadingCard" style="display:none;text-align:center;padding:24px;flex-direction:column;gap:10px;align-items:center">
         <div class="spinner" style="width:32px;height:32px;border-width:4px"></div>
-        <div style="font-size:14px;color:var(--text-muted)">Generating sentence…</div>
+        <div style="font-size:14px;color:var(--text-muted)">Satz wird erstellt…</div>
       </div>
       <div class="card" id="dictCard" style="display:none;flex-direction:column;gap:12px">
         <div style="display:flex;gap:8px;justify-content:center">
@@ -637,7 +637,7 @@
           <button class="listen-btn slow" onclick="dictPlay(0.65)">🐢 Langsam</button>
           <button class="listen-btn slow" onclick="dictPlay(0.5)">🐌 Sehr langsam</button>
         </div>
-        <input class="dictation-input" id="dictInput" placeholder="Type what you hear…" oninput="dictInputChanged()" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+        <input class="dictation-input" id="dictInput" placeholder="Schreib, was du hörst…" oninput="dictInputChanged()" autocorrect="off" autocapitalize="off" spellcheck="false"/>
         <button class="btn" id="dictCheckBtn" onclick="checkDictation()" disabled>✓ Prüfen</button>
         <div id="dictResult" style="display:none;flex-direction:column;gap:10px">
           <div id="dictResultText" style="font-size:15px;line-height:1.8"></div>
@@ -674,7 +674,7 @@
       </div>
       <div class="card" id="listenLoadingCard" style="display:none;text-align:center;padding:28px;gap:12px;flex-direction:column;align-items:center">
         <div class="spinner" style="width:36px;height:36px;border-width:4px"></div>
-        <div style="color:var(--text-muted);font-size:14px">Generating text…</div>
+        <div style="color:var(--text-muted);font-size:14px">Text wird erstellt…</div>
       </div>
       <div id="listenTextCard" class="card" style="display:none;flex-direction:column;gap:12px">
         <div style="display:flex;align-items:center;justify-content:space-between">
@@ -712,7 +712,7 @@
       </div>
       <div class="card" id="readLoadingCard" style="display:none;text-align:center;padding:28px;flex-direction:column;gap:10px;align-items:center">
         <div class="spinner" style="width:36px;height:36px;border-width:4px"></div>
-        <div style="font-size:14px;color:var(--text-muted)">Generating text…</div>
+        <div style="font-size:14px;color:var(--text-muted)">Text wird erstellt…</div>
       </div>
       <div class="card" id="readTextCard" style="display:none;flex-direction:column;gap:12px">
         <div style="display:flex;align-items:center;justify-content:space-between">
@@ -804,7 +804,7 @@
         <span id="pgBarLearnedN" style="font-size:12px;color:var(--text-muted);width:30px;text-align:right">0</span>
       </div>
       <div class="level-bar-row">
-        <span class="level-bar-label" style="width:60px;font-size:11px">In progress</span>
+        <span class="level-bar-label" style="width:60px;font-size:11px">In Arbeit</span>
         <div class="level-bar-wrap"><div class="level-bar-fill" id="pgBarProg" style="width:0%"></div></div>
         <span id="pgBarProgN" style="font-size:12px;color:var(--text-muted);width:30px;text-align:right">0</span>
       </div>
@@ -845,7 +845,7 @@
     <div id="testIntro" style="display:none"></div>
     <div id="testLoadingCard" class="card" style="display:none;text-align:center;padding:32px;gap:14px;flex-direction:column;align-items:center">
       <div class="spinner" style="width:40px;height:40px;border-width:4px"></div>
-      <div style="color:var(--text-muted);font-size:14px">Generating questions…</div>
+      <div style="color:var(--text-muted);font-size:14px">Fragen werden erstellt…</div>
     </div>
     <div id="testQuestionCard" class="card" style="display:none;flex-direction:column;gap:14px">
       <div style="display:flex;align-items:center;justify-content:space-between">
@@ -889,9 +889,9 @@
       <div id="micHint" class="mic-hint" style="display:none"></div>
       <!-- Text fallback for HTTP/non-HTTPS environments -->
       <div id="pronTextFallback" style="display:none;flex-direction:column;gap:8px;width:100%">
-        <div style="font-size:12px;color:var(--text-muted)">✍️ Alternatively: type what you said</div>
+        <div style="font-size:12px;color:var(--text-muted)">✍️ Alternativ: Satz eintippen</div>
         <div style="display:flex;gap:8px">
-          <input id="pronTextInput" placeholder="Type your spoken sentence…" autocorrect="off" autocapitalize="none" spellcheck="false"
+          <input id="pronTextInput" placeholder="Gesprochenen Satz eintippen…" autocorrect="off" autocapitalize="none" spellcheck="false"
             style="flex:1;font-size:15px" onkeydown="if(event.key==='Enter')submitPronText()"/>
           <button class="btn" style="width:auto;padding:10px 16px;min-height:44px;font-size:14px" onclick="submitPronText()">✓</button>
         </div>
@@ -1128,10 +1128,10 @@ function getApiKey() { return localStorage.getItem('geminiKey') || ''; }
 
 function saveApiKey() {
   const key = document.getElementById('apiKeyInput').value.trim();
-  if (key.length < 20) { showToast('Key too short — please paste the full key'); return; }
+  if (key.length < 20) { showToast('Schlüssel zu kurz — bitte vollständigen Schlüssel einfügen'); return; }
   localStorage.setItem('geminiKey', key);
   updateApiKeyUI();
-  showToast('✓ API Key saved!');
+  showToast('✓ API-Schlüssel gespeichert!');
   loadWordOfDay();
 }
 
@@ -1270,7 +1270,7 @@ async function callAIStream(messages, maxTokens = 500, onChunk) {
       throw e;
     }
   }
-  throw new Error('All models rate-limited — please wait 30 seconds. (' + lastErr + ')');
+  throw new Error('KI-Dienst überlastet — bitte 30 Sekunden warten. (' + lastErr + ')');
 }
 
 async function callAI(messages, maxTokens = 400) {
@@ -1279,7 +1279,7 @@ async function callAI(messages, maxTokens = 400) {
   if (!key) {
     switchTab('home', document.querySelector('.nav-btn'));
     updateApiKeyUI();
-    throw new Error('Please enter your API key on the Home tab first');
+    throw new Error('Bitte zuerst den API-Schlüssel auf der Startseite eingeben');
   }
   const body = _buildGeminiBody(messages, maxTokens);
   let lastErr = '';
@@ -1521,7 +1521,7 @@ async function sendChat() {
       errWrap.innerHTML = `
         <div class="msg bot" style="color:var(--danger);display:flex;flex-direction:column;gap:8px">
           <span>⚠️ ${escHtml(e.message)}</span>
-          <button class="btn secondary" style="font-size:13px;min-height:36px;padding:6px 12px" onclick="this.closest('.msg-wrap').remove();document.getElementById('chatInput').value=${JSON.stringify(text)};sendChat()">🔄 Try again</button>
+          <button class="btn secondary" style="font-size:13px;min-height:36px;padding:6px 12px" onclick="this.closest('.msg-wrap').remove();document.getElementById('chatInput').value=${JSON.stringify(text)};sendChat()">🔄 Nochmal</button>
         </div>`;
       msgs.appendChild(errWrap);
       msgs.scrollTop = msgs.scrollHeight;
@@ -1681,7 +1681,7 @@ function showNextCard() {
   const due = notLearned.filter(v => !v.dueDate || new Date(v.dueDate) <= new Date(today));
   const pool = due.length > 0 ? due : notLearned;
   currentCardIdx = vocab.indexOf(pool[Math.floor(Math.random() * pool.length)]);
-  card.innerHTML = `<div class="front-word">${escHtml(vocab[currentCardIdx].word)}</div><div class="tap-hint">Tap to reveal — or speak below</div>`;
+  card.innerHTML = `<div class="front-word">${escHtml(vocab[currentCardIdx].word)}</div><div class="tap-hint">Antippen zum Aufdecken — oder unten sprechen</div>`;
   cardFlipped = false;
   actions.style.display = 'none';
   voiceArea.style.display = 'flex';
@@ -1765,7 +1765,7 @@ function toggleVocabMic() {
   vocabRecognition.onerror = (e) => {
     stopVocabMic();
     document.getElementById('vocabVoiceStatus').textContent =
-      e.error === 'no-speech' ? 'Nothing heard — please try again.' : 'Error: ' + e.error;
+      e.error === 'no-speech' ? 'Nichts gehört — bitte nochmal versuchen.' : 'Fehler: ' + e.error;
   };
   vocabRecognition.onend = () => { if (isVocabRecording) stopVocabMic(); };
 
@@ -1803,14 +1803,14 @@ function checkVocabAnswer(spoken) {
     fb.style.background = '#064E3B55';
     fb.style.color = '#34D399';
     fb.style.border = '1px solid #10B98155';
-    fb.innerHTML = `✓ Correct! <span style="font-weight:400">${escHtml(v.translation)}</span> <span style="font-size:12px;opacity:0.8">${countLabel}</span>`;
+    fb.innerHTML = `✓ Richtig! <span style="font-weight:400">${escHtml(v.translation)}</span> <span style="font-size:12px;opacity:0.8">${countLabel}</span>`;
     speakEN('Correct!'); setTimeout(() => speak(v.translation), 700);
     setTimeout(() => markCard(true), 1400);
   } else {
     fb.style.background = '#450A0A55';
     fb.style.color = '#FCA5A5';
     fb.style.border = '1px solid #EF444455';
-    fb.innerHTML = '✗ Not quite — the answer is: <span style="color:white;font-weight:700">' + escHtml(v.translation) + '</span>';
+    fb.innerHTML = '✗ Nicht ganz — die Antwort ist: <span style="color:white;font-weight:700">' + escHtml(v.translation) + '</span>';
     speakEN('Not quite. The answer is:'); setTimeout(() => speak(v.translation), 900);
     document.getElementById('vocabActions').style.display = 'flex';
     document.getElementById('vocabVoiceArea').style.display = 'none';
@@ -1822,7 +1822,7 @@ async function addVocab() {
   if (!word) return;
 
   if (!translation) {
-    if (!getApiKey()) { showToast('Please enter your API key on the Home tab first'); return; }
+    if (!getApiKey()) { showToast('Bitte zuerst den API-Schlüssel auf der Startseite eingeben'); return; }
     const addBtn = document.querySelector('[onclick="addVocab()"]');
     if (addBtn) { addBtn.disabled = true; addBtn.textContent = '⏳ Übersetze…'; }
     try {
@@ -1849,7 +1849,7 @@ async function addVocab() {
   document.getElementById('newWord').value = '';
   document.getElementById('newTranslation').value = '';
   renderVocabStats();
-  showToast(`✓ "${word}" added`);
+  showToast(`✓ „${word}" hinzugefügt`);
 }
 function deleteVocab(i) {
   vocab.splice(i, 1);
@@ -1858,7 +1858,7 @@ function deleteVocab(i) {
 }
 async function generateVocab(btn) {
   if (!btn) btn = document.querySelector('[onclick*="generateVocab"]');
-  btn.disabled = true; btn.textContent = '⏳ Generating...';
+  btn.disabled = true; btn.textContent = '⏳ Wird erstellt…';
   try {
     const existing = vocab.map(v => v.word).slice(-30).join(', ');
     const activeInterests = getActiveInterests();
@@ -1871,7 +1871,7 @@ async function generateVocab(btn) {
     localStorage.setItem('vocab', JSON.stringify(vocab));
     renderVocabStats();
     showNextCard();
-  } catch(e) { alert('Error: ' + e.message); }
+  } catch(e) { alert('Fehler: ' + e.message); }
   btn.disabled = false; btn.textContent = '✨ KI: 5 Wörter vorschlagen';
 }
 
@@ -2002,7 +2002,7 @@ const localQuestionBank = {
 async function startGrammar(topic) {
   grammarTopic = topic; grammarIdx = 0; grammarCorrect = 0; grammarQuestions = [];
   const area = document.getElementById('grammarArea');
-  area.innerHTML = '<div style="text-align:center;padding:30px"><div class="spinner"></div><div style="margin-top:12px;color:var(--text-muted)">Loading questions...</div></div>';
+  area.innerHTML = '<div style="text-align:center;padding:30px"><div class="spinner"></div><div style="margin-top:12px;color:var(--text-muted)">Fragen werden geladen…</div></div>';
 
   // Use local bank first, then try AI for variety
   const bank = localQuestionBank[topic];
@@ -2042,7 +2042,7 @@ Return ONLY a valid JSON array, nothing else:
       usedQuestions[topic] = grammarQuestions.map(q => q.question);
       showGrammarQuestion();
     } else {
-      area.innerHTML = `<div class="card" style="color:var(--danger)">Error: ${escHtml(e.message)}<br><br><button class="btn secondary" onclick="startGrammar('${topic}')">Try again</button></div>`;
+      area.innerHTML = `<div class="card" style="color:var(--danger)">Fehler: ${escHtml(e.message)}<br><br><button class="btn secondary" onclick="startGrammar('${topic}')">Nochmal versuchen</button></div>`;
     }
   }
 }
@@ -2058,9 +2058,9 @@ function showGrammarQuestion() {
       <div class="card" style="text-align:center;padding:30px;gap:12px;display:flex;flex-direction:column">
         <div style="font-size:40px">${pct >= 80 ? '🎉' : pct >= 50 ? '👍' : '📚'}</div>
         <div style="font-size:22px;font-weight:700">${pct}%</div>
-        <div style="color:var(--text-muted)">${grammarCorrect} of ${total} correct</div>
+        <div style="color:var(--text-muted)">${grammarCorrect} von ${total} richtig</div>
         <button class="btn" onclick="startGrammar('${grammarTopic}')">Neues Quiz — gleiches Thema</button>
-        <button class="btn secondary" onclick="showTopicSelect()">Choose a different topic</button>
+        <button class="btn secondary" onclick="showTopicSelect()">Anderes Thema wählen</button>
       </div>`;
     return;
   }
@@ -2090,7 +2090,7 @@ function showTopicSelect() {
   document.getElementById('grammarArea').innerHTML = `
     <div class="card" style="padding:20px">
       <div style="font-size:28px;text-align:center;margin-bottom:8px">📚</div>
-      <div style="text-align:center;margin-bottom:14px;color:var(--text-muted);font-size:14px">Choose a topic</div>
+      <div style="text-align:center;margin-bottom:14px;color:var(--text-muted);font-size:14px">Thema wählen</div>
       <div id="topicGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
     </div>`;
   renderTopicGrid('topicGrid');
@@ -2106,7 +2106,7 @@ async function startFill(topic) {
   fillBlanks = [];
   fillAnswers = [];
   const area = document.getElementById('fillArea');
-  area.innerHTML = '<div style="text-align:center;padding:30px"><div class="spinner"></div><div style="margin-top:12px;color:var(--text-muted)">Generating text…</div></div>';
+  area.innerHTML = '<div style="text-align:center;padding:30px"><div class="spinner"></div><div style="margin-top:12px;color:var(--text-muted)">Lückentext wird erstellt…</div></div>';
   const seed = Math.floor(Math.random() * 99999);
   try {
     const reply = await callAI([{ role: 'user', content:
@@ -2122,7 +2122,7 @@ Return ONLY valid JSON, no extra text:
     fillAnswers = new Array(fillBlanks.length).fill(null);
     renderFillExercise(data.text);
   } catch(e) {
-    area.innerHTML = `<div class="card" style="color:var(--danger)">Error: ${escHtml(e.message)}<br><br>
+    area.innerHTML = `<div class="card" style="color:var(--danger)">Fehler: ${escHtml(e.message)}<br><br>
       <button class="btn secondary" onclick="startFill('${topic}')">Nochmal versuchen</button></div>`;
   }
 }
@@ -2144,7 +2144,7 @@ function renderFillExercise(text) {
   html += '</div>';
   html += `<button class="btn" id="fillSubmitBtn" onclick="checkFill()" disabled style="margin-top:4px">Antworten prüfen</button>`;
   html += `<button class="btn secondary" onclick="startFill('${fillTopic}')" style="margin-top:0">🔄 Neuer Text</button>`;
-  html += `<button class="btn secondary" onclick="showFillTopicSelect()" style="margin-top:0">← Topics</button>`;
+  html += `<button class="btn secondary" onclick="showFillTopicSelect()" style="margin-top:0">← Themen</button>`;
   document.getElementById('fillArea').innerHTML = `<div class="card" style="display:flex;flex-direction:column;gap:12px">${html}</div>`;
 }
 
@@ -2183,7 +2183,7 @@ function checkFill() {
   const icon = pct === 100 ? '🎉' : pct >= 60 ? '👍' : '📚';
   let resultHtml = `<div style="text-align:center;padding:8px 0">
     <div style="font-size:32px">${icon}</div>
-    <div style="font-size:20px;font-weight:700;margin:6px 0">${correct}/${fillBlanks.length} correct — ${pct}%</div>
+    <div style="font-size:20px;font-weight:700;margin:6px 0">${correct}/${fillBlanks.length} richtig — ${pct}%</div>
   </div>`;
   if (explanations.length) {
     resultHtml += `<div class="explanation">${explanations.join('<br><br>')}</div>`;
@@ -2191,8 +2191,8 @@ function checkFill() {
   } else {
     if (ttsEnabled) speakEN('Perfect! All answers correct!');
   }
-  resultHtml += `<button class="btn" onclick="startFill('${fillTopic}')">🔄 Neuer Text — same topic</button>`;
-  resultHtml += `<button class="btn secondary" onclick="showFillTopicSelect()">← Choose topic</button>`;
+  resultHtml += `<button class="btn" onclick="startFill('${fillTopic}')">🔄 Neuer Text — gleiches Thema</button>`;
+  resultHtml += `<button class="btn secondary" onclick="showFillTopicSelect()">← Thema wählen</button>`;
   document.getElementById('fillArea').querySelector('.card').innerHTML += resultHtml;
 }
 
@@ -2200,7 +2200,7 @@ function showFillTopicSelect() {
   document.getElementById('fillArea').innerHTML = `
     <div class="card" style="padding:20px">
       <div style="font-size:28px;text-align:center;margin-bottom:8px">📄</div>
-      <div style="text-align:center;margin-bottom:14px;color:var(--text-muted);font-size:14px">Choose a topic for your text</div>
+      <div style="text-align:center;margin-bottom:14px;color:var(--text-muted);font-size:14px">Thema für den Text wählen</div>
       <div id="fillTopicGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
     </div>`;
   renderTopicGrid('fillTopicGrid', true);
@@ -2217,7 +2217,7 @@ function answerGrammar(chosen) {
   grammarStats[grammarTopic].total++;
   if (chosen === q.correct) grammarStats[grammarTopic].correct++;
   saveGrammarStats();
-  const nextLabel = grammarIdx + 1 >= grammarQuestions.length ? 'See Results →' : 'Next →';
+  const nextLabel = grammarIdx + 1 >= grammarQuestions.length ? 'Ergebnis ansehen →' : 'Weiter →';
   document.querySelector('#grammarArea .card').innerHTML += `
     <div class="explanation">${escHtml(q.explanation)}</div>
     <button class="btn" onclick="grammarIdx++;showGrammarQuestion()" style="margin-top:4px">${nextLabel}</button>`;
@@ -2238,7 +2238,7 @@ function showIOSHint(context) {
     document.getElementById('micStatus').textContent = '';
     const hint = document.getElementById('micHint');
     hint.style.display = 'block';
-    hint.innerHTML = '🍎 <b>iPhone:</b> Speech input is not supported on iOS.<br>Other features (Listening, Grammar, Vocab) work normally.';
+    hint.innerHTML = '🍎 <b>iPhone:</b> Spracheingabe wird auf iOS nicht unterstützt.<br>Andere Funktionen (Hören, Grammatik, Vokabeln) funktionieren normal.';
   } else if (context === 'vocab') {
     document.getElementById('vocabVoiceStatus').textContent = '';
     const fb = document.getElementById('vocabVoiceFeedback');
@@ -2247,7 +2247,7 @@ function showIOSHint(context) {
     fb.style.color = '#818CF8';
     fb.style.border = '1px solid #4F46E5';
     fb.style.fontWeight = '400';
-    fb.innerHTML = '🍎 <b>iPhone:</b> Speech input is not supported on iOS.<br>Tap <b>👁 Show answer</b> to reveal the card.';
+    fb.innerHTML = '🍎 <b>iPhone:</b> Spracheingabe wird auf iOS nicht unterstützt.<br><b>👁 Antwort zeigen</b> antippen, um die Karte umzudrehen.';
   }
 }
 
@@ -2267,14 +2267,14 @@ function showMicError(context) {
 
 function setPronError(code, extra) {
   const map = {
-    'not-allowed':   'Microphone blocked. Click the 🔒 icon in the address bar and allow microphone access.',
-    'no-speech':     'Nothing heard — please try again or type your sentence below.',
-    'network':       '⚠️ No connection to speech API (requires internet). Please type your sentence below:',
-    'audio-capture': 'No microphone found — please connect one or type instead.',
-    'service-not-allowed': 'Speech service not allowed. Open the app via localhost (start.bat) instead of file://.',
+    'not-allowed':   'Mikrofon gesperrt. Auf das 🔒-Symbol in der Adressleiste klicken und Mikrofon erlauben.',
+    'no-speech':     'Nichts gehört — bitte nochmal versuchen oder Satz unten eintippen.',
+    'network':       '⚠️ Keine Verbindung zur Sprach-API (Internet erforderlich). Bitte Satz unten eintippen:',
+    'audio-capture': 'Kein Mikrofon gefunden — bitte anschließen oder stattdessen eintippen.',
+    'service-not-allowed': 'Sprachdienst nicht erlaubt. App über localhost (start.bat) statt file:// öffnen.',
     'aborted':       '',
   };
-  const text = map[code] || ('Error: ' + code + (extra ? ' — ' + extra : ''));
+  const text = map[code] || ('Fehler: ' + code + (extra ? ' — ' + extra : ''));
   if (!text) return;
   const hint = document.getElementById('micHint');
   hint.style.display = 'block';
@@ -2371,8 +2371,8 @@ async function toggleRecording() {
     const hint = document.getElementById('micHint');
     hint.style.display = 'block';
     hint.innerHTML = isIOS
-      ? '🍎 <b>iPhone:</b> Open this app in <b>Safari</b> (not as a Home Screen app) for speech recognition.'
-      : 'Speech recognition is not supported in this browser. Please use Chrome or Safari.';
+      ? '🍎 <b>iPhone:</b> Diese App in <b>Safari</b> öffnen (nicht als Home-Screen-App) für Spracherkennung.'
+      : 'Spracherkennung wird in diesem Browser nicht unterstützt. Bitte Chrome oder Safari verwenden.';
     document.getElementById('pronTextFallback').style.display = 'flex';
     return;
   }
@@ -2507,7 +2507,7 @@ function _doEvaluatePronunciation(transcript) {
 
   // Word diff
   const diffEl = document.getElementById('wordDiff');
-  diffEl.innerHTML = '<div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Word check</div>' + buildWordDiff(currentPronSentence, transcript);
+  diffEl.innerHTML = '<div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Wortvergleich</div>' + buildWordDiff(currentPronSentence, transcript);
   diffEl.style.display = 'block';
 
   // Local score (Levenshtein-based, accurate)
@@ -2533,11 +2533,11 @@ function _doEvaluatePronunciation(transcript) {
   // Find missed words for specific tip
   const missed = tWords.filter(tw => !sWords.some(sw => levenshtein(tw, sw) <= Math.max(1, Math.floor(tw.length / 3))));
   let feedback, tip = '';
-  if (score >= 90) { feedback = '🌟 Excellent! Your pronunciation was very accurate.'; }
-  else if (score >= 75) { feedback = '👍 Great job! Most words came through clearly.'; }
-  else if (score >= 50) { feedback = 'Good effort! Focus on the red words and try again.'; }
-  else { feedback = 'Keep going — listen to the sentence first, then repeat slowly.'; }
-  if (missed.length > 0 && missed.length <= 3) tip = '💡 Practise: ' + missed.map(w => `"${w}"`).join(', ');
+  if (score >= 90) { feedback = '🌟 Ausgezeichnet! Deine Aussprache war sehr genau.'; }
+  else if (score >= 75) { feedback = '👍 Super! Die meisten Wörter kamen klar durch.'; }
+  else if (score >= 50) { feedback = 'Guter Versuch! Konzentriere dich auf die roten Wörter.'; }
+  else { feedback = 'Weitermachen — erst den Satz anhören, dann langsam wiederholen.'; }
+  if (missed.length > 0 && missed.length <= 3) tip = '💡 Üben: ' + missed.map(w => `„${w}"`).join(', ');
 
   document.getElementById('pronFeedback').textContent = feedback;
   document.getElementById('pronTranscript').innerHTML =
@@ -2660,7 +2660,7 @@ if (isIOS && !window.navigator.standalone) {
     const b = document.createElement('div');
     b.id = 'installBanner';
     b.style.cssText = 'position:fixed;bottom:72px;left:12px;right:12px;z-index:200;background:#1e1b4b;border:1px solid var(--primary-light);border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;box-shadow:0 4px 20px rgba(0,0,0,0.5)';
-    b.innerHTML = `<span>📲 <b>Install as app:</b> Share button → <b>Add to Home Screen</b></span>
+    b.innerHTML = `<span>📲 <b>Als App installieren:</b> Teilen → <b>Zum Home-Bildschirm</b></span>
       <button onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:0 4px;flex-shrink:0">✕</button>`;
     document.body.appendChild(b);
     setTimeout(() => b.remove(), 12000);
@@ -2828,7 +2828,7 @@ function startVocabQuiz(filter) {
   else if (filter !== 'all') pool = vocab.filter(v => v.topic === filter || v.interests?.includes(filter));
 
   if (pool.length < 4) {
-    alert('Not enough words for a quiz. Please add at least 4 words.');
+    alert('Nicht genug Wörter für ein Quiz. Bitte mindestens 4 Wörter hinzufügen.');
     return;
   }
 
@@ -2892,8 +2892,8 @@ function answerVocabQuiz(chosen, correct) {
 
   const expDiv = document.getElementById('vocabQuizExplanation');
   expDiv.textContent = isCorrect
-    ? `✓ Correct! "${correct}" = "${q.translation}"${q.example ? ' — ' + q.example : ''}`
-    : `✗ "${correct}" = "${q.translation}"${q.example ? ' — ' + q.example : ''}`;
+    ? `✓ Richtig! „${correct}" = „${q.translation}"${q.example ? ' — ' + q.example : ''}`
+    : `✗ „${correct}" = „${q.translation}"${q.example ? ' — ' + q.example : ''}`;
   expDiv.style.display = 'block';
   document.getElementById('vocabQuizNextBtn').style.display = 'block';
 
@@ -2980,7 +2980,7 @@ seed:${seed}` }], 1000);
   } catch(e) {
     document.getElementById('listenLoadingCard').style.display = 'none';
     document.getElementById('listenIntro').style.display = 'flex';
-    alert('Error: ' + e.message);
+    alert('Fehler: ' + e.message);
   }
 }
 
@@ -3080,11 +3080,11 @@ If the text is perfect, return {"errors":[],"corrected":"${text}"}` }], 1200);
     document.getElementById('writeLoadingCard').style.display = 'none';
     document.getElementById('writeResultCard').style.display = 'flex';
     document.getElementById('writeErrorCount').textContent =
-      data.errors.length === 0 ? '✓ Perfect!' : data.errors.length + ' error' + (data.errors.length > 1 ? 's' : '');
+      data.errors.length === 0 ? '✓ Perfekt!' : data.errors.length + ' Fehler';
 
     if (data.errors.length === 0) {
       document.getElementById('writeCorrections').innerHTML =
-        '<div style="color:var(--accent);font-weight:700;text-align:center;padding:8px">🎉 No errors found — excellent writing!</div>';
+        '<div style="color:var(--accent);font-weight:700;text-align:center;padding:8px">🎉 Keine Fehler gefunden — ausgezeichnet!</div>';
     } else {
       document.getElementById('writeCorrections').innerHTML = data.errors.map(e => `
         <div class="correction-item">
@@ -3099,7 +3099,7 @@ If the text is perfect, return {"errors":[],"corrected":"${text}"}` }], 1200);
   } catch(e) {
     document.getElementById('writeLoadingCard').style.display = 'none';
     document.getElementById('writeCheckBtn').disabled = false;
-    alert('Error: ' + e.message);
+    alert('Fehler: ' + e.message);
   }
 }
 
@@ -3140,7 +3140,7 @@ Return ONLY the sentence in German, nothing else. No quotes. 8–16 words.`}], 8
   } catch(e) {
     document.getElementById('dictLoadingCard').style.display = 'none';
     document.getElementById('dictIntro').style.display = 'flex';
-    alert('Error: ' + e.message);
+    alert('Fehler: ' + e.message);
   }
 }
 
@@ -3220,7 +3220,7 @@ Return ONLY valid JSON:
   } catch(e) {
     document.getElementById('buildLoadingCard').style.display = 'none';
     document.getElementById('buildIntro').style.display = 'flex';
-    alert('Error: ' + e.message);
+    alert('Fehler: ' + e.message);
   }
 }
 
@@ -3270,8 +3270,8 @@ function checkBuild() {
     s.classList.add(buildPlaced[i] !== undefined && buildWords[buildPlaced[i]].toLowerCase() === (correctWords[i]||'').toLowerCase() ? 'correct' : 'wrong');
   });
   document.getElementById('buildResultText').innerHTML = isCorrect
-    ? `🎉 Correct! <em>${escHtml(buildCorrect)}</em>`
-    : `✗ Correct answer: <strong>${escHtml(buildCorrect)}</strong>`;
+    ? `🎉 Richtig! <em>${escHtml(buildCorrect)}</em>`
+    : `✗ Richtige Antwort: <strong>${escHtml(buildCorrect)}</strong>`;
   document.getElementById('buildResult').style.display = 'flex';
   if (ttsEnabled) speak(buildCorrect);
 }
@@ -3320,7 +3320,7 @@ function showWotd() {
 function addWotdToVocab() {
   if (!wotdData) return;
   if (vocab.some(v => v.word.toLowerCase() === wotdData.word.toLowerCase())) {
-    alert('This word is already in your vocabulary list.'); return;
+    alert('Dieses Wort ist bereits in deiner Vokabelliste.'); return;
   }
   vocab.push({ word: wotdData.word, translation: wotdData.translation, example: wotdData.example, learned: false, correct: 0 });
   localStorage.setItem('vocab', JSON.stringify(vocab));
@@ -3710,7 +3710,7 @@ function _shuffleArr(arr) {
 }
 
 async function startPlacementTest() {
-  if (!getApiKey()) { showToast('Please enter your API key on the Home tab first'); return; }
+  if (!getApiKey()) { showToast('Bitte zuerst den API-Schlüssel auf der Startseite eingeben'); return; }
   testQuestions = [];
   testIdx = 0;
   testScores = Object.fromEntries(TEST_LEVELS.map(l => [l, 0]));
@@ -3770,7 +3770,7 @@ function answerTest(chosen) {
 
   const expDiv = document.getElementById('testExplanation');
   const isCorrect = chosen === q.correct;
-  expDiv.innerHTML = `<strong>${isCorrect ? '✅ Correct!' : '❌ Wrong.'}</strong>${!isCorrect ? ` Correct answer: <em>${escHtml(q.options[q.correct])}</em>` : ''}<br><br>${escHtml(q.explanation || '')}`;
+  expDiv.innerHTML = `<strong>${isCorrect ? '✅ Richtig!' : '❌ Falsch.'}</strong>${!isCorrect ? ` Richtige Antwort: <em>${escHtml(q.options[q.correct])}</em>` : ''}<br><br>${escHtml(q.explanation || '')}`;
   expDiv.style.display = 'block';
   document.getElementById('testNextBtn').style.display = 'block';
 }
@@ -3983,7 +3983,7 @@ async function addWordFromPopup() {
   if (!pwCurrentWord) return;
   const word = pwCurrentWord;
   const exists = vocab.find(v => v.word.toLowerCase() === word.toLowerCase());
-  if (exists) { closeWordPopup(); showToast(`"${word}" is already in your vocab`); return; }
+  if (exists) { closeWordPopup(); showToast(`„${word}" ist bereits in deiner Vokabelliste`); return; }
 
   // Wait for translation if still loading
   if (_pwLoadingPromise && !pwCurrentTrans) {
@@ -3998,7 +3998,7 @@ async function addWordFromPopup() {
   localStorage.setItem('vocab', JSON.stringify(vocab));
   renderVocabStats();
   closeWordPopup();
-  showToast(`✓ "${word}" → ${translation || '?'} added to vocab`);
+  showToast(`✓ „${word}" → ${translation || '?'} zu Vokabeln hinzugefügt`);
 }
 
 function showToast(msg) {
@@ -4060,12 +4060,12 @@ async function addSelectionToVocab() {
   _hideSelBtn();
   window.getSelection()?.removeAllRanges();
   const exists = vocab.find(v => v.word.toLowerCase() === word.toLowerCase());
-  if (exists) { showToast(`"${word}" is already in your vocab`); return; }
-  showToast(`⏳ Fetching translation…`);
+  if (exists) { showToast(`„${word}" ist bereits in deiner Vokabelliste`); return; }
+  showToast(`⏳ Übersetzung wird abgerufen…`);
   let translation = '', example = '';
   // Fast translation first
   translation = (await _translateWordFast(word)) || '';
-  if (translation) showToast(`⏳ "${word}" → ${translation} — saving…`);
+  if (translation) showToast(`⏳ „${word}" → ${translation} — wird gespeichert…`);
   // AI example in background
   try {
     const reply = await _callAIOnce([{role:'user', content:`For the German word "${word}", reply ONLY with valid JSON:\n{"baseForm":"if verb give infinitive (e.g. 'laufen'), otherwise same word with article if noun (e.g. 'der Hund')","translation":"English translation of the base form","example":"One short natural German sentence using the base form."}`}], 80);
@@ -4077,7 +4077,7 @@ async function addSelectionToVocab() {
   vocab.push({ word, translation, example, learned: false });
   localStorage.setItem('vocab', JSON.stringify(vocab));
   renderVocabStats();
-  showToast(`✓ "${word}" → ${translation || '?'} added to vocab`);
+  showToast(`✓ „${word}" → ${translation || '?'} zu Vokabeln hinzugefügt`);
 }
 </script>
 </body>
