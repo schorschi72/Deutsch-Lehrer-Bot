@@ -397,29 +397,29 @@
   <!-- VOCAB -->
   <div class="tab-content" id="tab-vocab">
     <div style="display:flex;gap:8px">
-      <button class="grammar-mode-btn active" id="vocabFlashBtn" onclick="switchVocabMode('flash')">🃏 Flashcards</button>
+      <button class="grammar-mode-btn active" id="vocabFlashBtn" onclick="switchVocabMode('flash')">🃏 Karteikarten</button>
       <button class="grammar-mode-btn" id="vocabQuizBtn" onclick="switchVocabMode('quiz')">🧠 Quiz</button>
     </div>
 
     <!-- FLASHCARD MODE -->
     <div id="vocabFlashPanel" style="display:flex;flex-direction:column;gap:12px">
     <div class="vocab-stats">
-      <div class="stat-box"><div class="num" id="vocabTotal">0</div><div class="lbl">Total</div></div>
-      <div class="stat-box"><div class="num" id="vocabLearned">0</div><div class="lbl">Learned</div></div>
+      <div class="stat-box"><div class="num" id="vocabTotal">0</div><div class="lbl">Gesamt</div></div>
+      <div class="stat-box"><div class="num" id="vocabLearned">0</div><div class="lbl">Gelernt</div></div>
       <div class="stat-box"><div class="num" id="vocabStreak">0</div><div class="lbl">Streak 🔥</div></div>
     </div>
     <div class="flashcard" id="flashcard" onclick="flipCard()">
-      <div class="tap-hint">Add vocabulary below to start</div>
+      <div class="tap-hint">Unten Vokabeln hinzufügen</div>
     </div>
 
     <!-- Voice answer area -->
     <div id="vocabVoiceArea" style="display:none;flex-direction:column;gap:8px">
       <div style="display:flex;gap:8px;justify-content:center">
         <button class="listen-btn" id="vocabMicBtn" onclick="toggleVocabMic()" style="padding:10px 20px;font-size:14px">
-          🎤 Speak the German word
+          🎤 Deutsches Wort sagen
         </button>
         <button class="listen-btn" onclick="flipCard()" style="padding:10px 16px;font-size:14px;border-color:var(--border)">
-          👁 Show answer
+          👁 Antwort zeigen
         </button>
       </div>
       <div id="vocabVoiceStatus" style="text-align:center;font-size:13px;color:var(--text-muted);min-height:18px"></div>
@@ -427,33 +427,33 @@
     </div>
 
     <div class="vocab-actions" id="vocabActions" style="display:none">
-      <button class="btn danger" onclick="markCard(false)">✗ Hard</button>
-      <button class="btn success" onclick="markCard(true)">✓ Easy</button>
+      <button class="btn danger" onclick="markCard(false)">✗ Schwer</button>
+      <button class="btn success" onclick="markCard(true)">✓ Leicht</button>
     </div>
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;cursor:pointer" onclick="toggleInterests()">
-        <div class="section-title">My Interests</div>
+        <div class="section-title">Meine Interessen</div>
         <span id="interestsToggleIcon" style="color:var(--text-muted);font-size:13px">▼</span>
       </div>
       <div id="interestsPanel">
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px" id="interestChips"></div>
-        <input id="customInterest" placeholder="Add your own topic…" style="margin-bottom:8px"
+        <input id="customInterest" placeholder="Eigenes Thema hinzufügen…" style="margin-bottom:8px"
           onkeydown="if(event.key==='Enter'){addCustomInterest();event.preventDefault()}"/>
-        <button class="btn secondary" style="font-size:13px;min-height:40px" onclick="addCustomInterest()">+ Add topic</button>
+        <button class="btn secondary" style="font-size:13px;min-height:40px" onclick="addCustomInterest()">+ Thema hinzufügen</button>
       </div>
     </div>
 
     <div class="card">
-      <div class="section-title" style="margin-bottom:10px">Add Word</div>
+      <div class="section-title" style="margin-bottom:10px">Wort hinzufügen</div>
       <div style="display:flex;flex-direction:column;gap:8px">
         <input id="newWord" placeholder="English word or phrase" />
         <input id="newTranslation" placeholder="German translation" />
-        <button class="btn" onclick="addVocab()">+ Add</button>
-        <button class="btn secondary" onclick="generateVocab(this)">✨ AI: Suggest 5 words</button>
+        <button class="btn" onclick="addVocab()">+ Hinzufügen</button>
+        <button class="btn secondary" onclick="generateVocab(this)">✨ KI: 5 Wörter vorschlagen</button>
       </div>
     </div>
     <div id="vocabListWrap" style="display:none">
-      <div class="section-title" style="margin-bottom:8px">My Words</div>
+      <div class="section-title" style="margin-bottom:8px">Meine Wörter</div>
       <div class="vocab-list" id="vocabList"></div>
     </div>
     </div> <!-- end vocabFlashPanel -->
@@ -464,10 +464,10 @@
       <!-- Intro: choose filter -->
       <div id="vocabQuizIntro" class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center">
         <div style="font-size:36px">🧠</div>
-        <div class="section-title">Vocabulary Quiz</div>
+        <div class="section-title">Vokabelquiz</div>
         <div style="color:var(--text-muted);font-size:14px">Choose which words to test.</div>
-        <button class="btn" style="width:100%" onclick="startVocabQuiz('all')">📚 Test all words</button>
-        <button class="btn secondary" style="width:100%" id="vocabQuizLearnedBtn" onclick="startVocabQuiz('learned')">✅ Only learned words</button>
+        <button class="btn" style="width:100%" onclick="startVocabQuiz('all')">📚 Alle Wörter testen</button>
+        <button class="btn secondary" style="width:100%" id="vocabQuizLearnedBtn" onclick="startVocabQuiz('learned')">✅ Nur gelernte Wörter</button>
         <div id="vocabQuizInterestBtns" style="width:100%;display:flex;flex-direction:column;gap:8px"></div>
       </div>
 
@@ -475,7 +475,7 @@
       <div id="vocabQuizQuestion" class="card" style="display:none;flex-direction:column;gap:14px">
         <div style="display:flex;align-items:center;justify-content:space-between">
           <span style="font-size:13px;color:var(--text-muted)" id="vocabQuizCounter">1 / 10</span>
-          <span class="badge blue" id="vocabQuizScore">0 correct</span>
+          <span class="badge blue" id="vocabQuizScore">0 richtig</span>
         </div>
         <div class="progress-bar-wrap"><div class="progress-bar-fill" id="vocabQuizProgress" style="width:0%"></div></div>
         <div style="text-align:center;font-size:13px;color:var(--text-muted)">What is the English meaning of:</div>
@@ -483,7 +483,7 @@
         <div id="vocabQuizExample" style="font-size:13px;color:var(--text-muted);text-align:center;font-style:italic"></div>
         <div id="vocabQuizOptions"></div>
         <div id="vocabQuizExplanation" class="explanation" style="display:none"></div>
-        <button class="btn" id="vocabQuizNextBtn" style="display:none" onclick="vocabQuizNext()">Next →</button>
+        <button class="btn" id="vocabQuizNextBtn" style="display:none" onclick="vocabQuizNext()">Weiter →</button>
       </div>
 
       <!-- Result -->
@@ -492,8 +492,8 @@
         <div style="font-size:24px;font-weight:800" id="vocabQuizResultScore"></div>
         <div style="font-size:14px;color:var(--text-muted)" id="vocabQuizResultDetail"></div>
         <div id="vocabQuizMistakes" style="width:100%;text-align:left"></div>
-        <button class="btn" onclick="startVocabQuiz(lastVocabQuizFilter)">🔄 Try again</button>
-        <button class="btn secondary" onclick="resetVocabQuiz()">← Back</button>
+        <button class="btn" onclick="startVocabQuiz(lastVocabQuizFilter)">🔄 Nochmal versuchen</button>
+        <button class="btn secondary" onclick="resetVocabQuiz()">← Zurück</button>
       </div>
 
     </div>
@@ -504,16 +504,16 @@
     <!-- Mode switcher -->
     <div style="display:flex;gap:6px;flex-wrap:wrap">
       <button class="grammar-mode-btn active" id="modeQuizBtn" onclick="switchPracticeMode('quiz')" style="flex:1;min-width:0;font-size:12px">📚 Quiz</button>
-      <button class="grammar-mode-btn" id="modeFillBtn" onclick="switchPracticeMode('fill')" style="flex:1;min-width:0;font-size:12px">📄 Fill-in</button>
-      <button class="grammar-mode-btn" id="modeBuildBtn" onclick="switchPracticeMode('build')" style="flex:1;min-width:0;font-size:12px">🧩 Satz</button>
-      <button class="grammar-mode-btn" id="modeWriteBtn" onclick="switchPracticeMode('write')" style="flex:1;min-width:0;font-size:12px">✍️ Text</button>
+      <button class="grammar-mode-btn" id="modeFillBtn" onclick="switchPracticeMode('fill')" style="flex:1;min-width:0;font-size:12px">📄 Lückentext</button>
+      <button class="grammar-mode-btn" id="modeBuildBtn" onclick="switchPracticeMode('build')" style="flex:1;min-width:0;font-size:12px">🧩 Satzbau</button>
+      <button class="grammar-mode-btn" id="modeWriteBtn" onclick="switchPracticeMode('write')" style="flex:1;min-width:0;font-size:12px">✍️ Schreiben</button>
       <button class="grammar-mode-btn" id="modeDictBtn" onclick="switchPracticeMode('dict')" style="flex:1;min-width:0;font-size:12px">🎧 Diktat</button>
     </div>
 
     <!-- QUIZ mode -->
     <div id="grammarQuizPanel" style="display:flex;flex-direction:column;gap:12px">
       <div style="display:flex;align-items:center;justify-content:space-between">
-        <div class="section-title">Grammar Quiz</div>
+        <div class="section-title">Grammatikquiz</div>
         <span class="badge blue" id="grammarScore">0 / 0</span>
       </div>
       <div class="progress-bar-wrap">
@@ -522,7 +522,7 @@
       <div id="grammarArea">
         <div class="card" style="padding:20px">
           <div style="font-size:28px;text-align:center;margin-bottom:8px">📚</div>
-          <div style="text-align:center;margin-bottom:14px;color:var(--text-muted);font-size:14px">Choose a topic</div>
+          <div style="text-align:center;margin-bottom:14px;color:var(--text-muted);font-size:14px">Thema wählen</div>
           <div id="topicGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
         </div>
       </div>
@@ -533,7 +533,7 @@
       <div id="fillArea">
         <div class="card" style="padding:20px">
           <div style="font-size:28px;text-align:center;margin-bottom:8px">📄</div>
-          <div style="text-align:center;margin-bottom:14px;color:var(--text-muted);font-size:14px">Choose a topic for your text</div>
+          <div style="text-align:center;margin-bottom:14px;color:var(--text-muted);font-size:14px">Thema für den Text wählen</div>
           <div id="fillTopicGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
         </div>
       </div>
@@ -543,7 +543,7 @@
     <div id="grammarBuildPanel" style="display:none;flex-direction:column;gap:12px">
       <div class="card" id="buildIntro" style="padding:20px;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center">
         <div style="font-size:36px">🧩</div>
-        <div class="section-title">Sentence Builder</div>
+        <div class="section-title">Satzbau</div>
         <div style="color:var(--text-muted);font-size:14px">Put the words in the correct order to form the German sentence.</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
           <button class="btn secondary" style="font-size:12px;padding:6px 12px" onclick="startBuild('B1')">B1</button>
@@ -564,12 +564,13 @@
         <div id="buildSlots" style="min-height:48px;background:var(--surface2);border-radius:10px;padding:10px;display:flex;flex-wrap:wrap;gap:4px;align-items:center"></div>
         <div id="buildTiles" style="display:flex;flex-wrap:wrap;gap:4px"></div>
         <div style="display:flex;gap:8px">
-          <button class="btn" onclick="checkBuild()">✓ Check</button>
-          <button class="btn secondary" onclick="clearBuild()">✗ Clear</button>
+          <button class="btn" onclick="checkBuild()">✓ Prüfen</button>
+          <button class="btn secondary" onclick="clearBuild()">✗ Leeren</button>
         </div>
         <div id="buildResult" style="display:none;flex-direction:column;gap:8px">
           <div id="buildResultText" class="explanation"></div>
           <button class="btn" onclick="startBuild(lastBuildLevel)">🔄 Neuer Satz</button>
+
         </div>
       </div>
     </div>
@@ -577,7 +578,7 @@
     <!-- WRITING (in Practice tab) -->
     <div id="skillsWritePanel" style="display:none;flex-direction:column;gap:12px">
       <div class="card" style="padding:16px;display:flex;flex-direction:column;gap:12px">
-        <div class="section-title">✍️ Writing Correction</div>
+        <div class="section-title">✍️ Schreibkorrektur</div>
         <div style="color:var(--text-muted);font-size:13px">Write a German text — the AI corrects every mistake with an explanation.</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap" id="writePromptChips">
           <button class="btn secondary" style="font-size:12px;padding:5px 10px" onclick="setWritePrompt('Beschreibe deinen typischen Tag auf Deutsch.')">My day</button>
@@ -588,8 +589,8 @@
         <div id="writePromptHint" style="font-size:13px;color:var(--primary-light);display:none"></div>
         <textarea class="write-area" id="writeInput" placeholder="Write your text here in German…" oninput="writeInputChanged()"></textarea>
         <div style="display:flex;justify-content:space-between;align-items:center">
-          <span id="writeWordCount" style="font-size:12px;color:var(--text-muted)">0 words</span>
-          <button class="btn" id="writeCheckBtn" onclick="checkWriting()" disabled>✓ Correct my text</button>
+          <span id="writeWordCount" style="font-size:12px;color:var(--text-muted)">0 Wörter</span>
+          <button class="btn" id="writeCheckBtn" onclick="checkWriting()" disabled>✓ Text korrigieren</button>
         </div>
       </div>
       <div class="card" id="writeLoadingCard" style="display:none;text-align:center;padding:24px;flex-direction:column;gap:10px;align-items:center">
@@ -598,16 +599,16 @@
       </div>
       <div class="card" id="writeResultCard" style="display:none;flex-direction:column;gap:14px">
         <div style="display:flex;align-items:center;justify-content:space-between">
-          <div class="section-title">Corrections</div>
+          <div class="section-title">Korrekturen</div>
           <span class="badge blue" id="writeErrorCount"></span>
         </div>
         <div id="writeCorrections"></div>
         <div class="card" style="background:var(--surface2);padding:14px;gap:8px;display:flex;flex-direction:column">
-          <div style="font-size:12px;font-weight:700;color:var(--text-muted)">CORRECTED VERSION</div>
+          <div style="font-size:12px;font-weight:700;color:var(--text-muted)">KORRIGIERTE VERSION</div>
           <div id="writeCorrectedText" style="font-size:15px;line-height:1.7"></div>
           <button class="listen-btn" onclick="speak(document.getElementById('writeCorrectedText').textContent)">🔊 Listen</button>
         </div>
-        <button class="btn secondary" onclick="writeReset()">✍️ New text</button>
+        <button class="btn secondary" onclick="writeReset()">✍️ Neuer Text</button>
       </div>
     </div>
 
@@ -617,11 +618,13 @@
         <div style="font-size:36px">🎧</div>
         <div class="section-title">Diktat</div>
         <div style="color:var(--text-muted);font-size:14px">Listen to the German sentence and type it out. Capitalisation and punctuation are not checked.</div>
+
         <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
           <button class="btn secondary" style="font-size:12px;padding:6px 12px" onclick="startDictation('B1')">B1</button>
           <button class="btn secondary" style="font-size:12px;padding:6px 12px" onclick="startDictation('B2')">B2</button>
           <button class="btn secondary" style="font-size:12px;padding:6px 12px" onclick="startDictation('C1')">C1</button>
           <button class="btn secondary" style="font-size:12px;padding:6px 12px" onclick="startDictation('random')">🎲 Zufällig</button>
+
         </div>
       </div>
       <div class="card" id="dictLoadingCard" style="display:none;text-align:center;padding:24px;flex-direction:column;gap:10px;align-items:center">
@@ -635,13 +638,13 @@
           <button class="listen-btn slow" onclick="dictPlay(0.5)">🐌 Very slow</button>
         </div>
         <input class="dictation-input" id="dictInput" placeholder="Type what you hear…" oninput="dictInputChanged()" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-        <button class="btn" id="dictCheckBtn" onclick="checkDictation()" disabled>✓ Check</button>
+        <button class="btn" id="dictCheckBtn" onclick="checkDictation()" disabled>✓ Prüfen</button>
         <div id="dictResult" style="display:none;flex-direction:column;gap:10px">
           <div id="dictResultText" style="font-size:15px;line-height:1.8"></div>
           <div id="dictExplanation" class="explanation" style="display:none"></div>
           <div style="display:flex;gap:8px">
             <button class="btn" onclick="startDictation(lastDictLevel)">🔄 Neuer Satz</button>
-            <button class="btn secondary" onclick="dictIntroReset()">← Back</button>
+            <button class="btn secondary" onclick="dictIntroReset()">← Zurück</button>
           </div>
         </div>
       </div>
@@ -659,7 +662,7 @@
     <div id="skillsListenPanel" style="display:none;flex-direction:column;gap:12px">
       <div class="card" id="listenIntro" style="padding:20px;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center">
         <div style="font-size:36px">👂</div>
-        <div class="section-title">Listening Comprehension</div>
+        <div class="section-title">Hörverstehen</div>
         <div style="color:var(--text-muted);font-size:14px">Listen to a German text and answer comprehension questions.</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center" id="listenTopicChips">
           <button class="btn secondary" style="font-size:12px;padding:6px 12px" onclick="startListening('daily life')">🏠 Daily Life</button>
@@ -675,22 +678,22 @@
       </div>
       <div id="listenTextCard" class="card" style="display:none;flex-direction:column;gap:12px">
         <div style="display:flex;align-items:center;justify-content:space-between">
-          <div class="section-title">Listen carefully</div>
+          <div class="section-title">Gut zuhören</div>
           <div style="display:flex;gap:6px">
             <button class="listen-btn" onclick="listenPlayText(1.0)">🔊 Play</button>
             <button class="listen-btn slow" onclick="listenPlayText(0.7)">🐢 Slow</button>
           </div>
         </div>
         <div id="listenTextDisplay" style="font-size:15px;line-height:1.7;color:var(--text-muted);background:var(--surface2);border-radius:10px;padding:14px;display:none"></div>
-        <button class="btn" id="listenShowTextBtn" onclick="listenToggleText()">👁 Show text</button>
-        <button class="btn" id="listenQuestionsBtn" onclick="listenShowQuestions()" style="display:none">📝 Answer questions</button>
+        <button class="btn" id="listenShowTextBtn" onclick="listenToggleText()">👁 Text anzeigen</button>
+        <button class="btn" id="listenQuestionsBtn" onclick="listenShowQuestions()" style="display:none">📝 Fragen beantworten</button>
       </div>
       <div id="listenQuestionsCard" class="card" style="display:none;flex-direction:column;gap:14px">
-        <div class="section-title">Comprehension Questions</div>
+        <div class="section-title">Verständnisfragen</div>
         <div id="listenQuestions"></div>
-        <button class="btn" id="listenCheckBtn" onclick="listenCheck()" disabled>Check answers</button>
+        <button class="btn" id="listenCheckBtn" onclick="listenCheck()" disabled>Antworten prüfen</button>
         <div id="listenResult" style="display:none"></div>
-        <button class="btn secondary" id="listenNewBtn" style="display:none" onclick="listenReset()">🔄 New text</button>
+        <button class="btn secondary" id="listenNewBtn" style="display:none" onclick="listenReset()">🔄 Neuer Text</button>
       </div>
     </div>
 
@@ -698,7 +701,7 @@
     <div id="skillsReadPanel" style="display:flex;flex-direction:column;gap:12px">
       <div class="card" id="readIntro" style="padding:20px;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center">
         <div style="font-size:36px">📖</div>
-        <div class="section-title">Reading Comprehension</div>
+        <div class="section-title">Leseverstehen</div>
         <div style="color:var(--text-muted);font-size:14px">Read a German text and answer comprehension questions.</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
           <button class="btn secondary" style="font-size:12px;padding:6px 12px" onclick="startReading('B1','Alltag')">B1 · Daily Life</button>
@@ -714,17 +717,17 @@
       <div class="card" id="readTextCard" style="display:none;flex-direction:column;gap:12px">
         <div style="display:flex;align-items:center;justify-content:space-between">
           <span class="badge blue" id="readLevelBadge">B1</span>
-          <button class="listen-btn" style="font-size:12px;padding:5px 12px" onclick="speak(currentReadText,0.9)">🔊 Read aloud</button>
+          <button class="listen-btn" style="font-size:12px;padding:5px 12px" onclick="speak(currentReadText,0.9)">🔊 Vorlesen</button>
         </div>
         <div class="read-text" id="readText"></div>
-        <button class="btn" onclick="readShowQuestions()">📝 Answer questions</button>
+        <button class="btn" onclick="readShowQuestions()">📝 Fragen beantworten</button>
       </div>
       <div class="card" id="readQuestionsCard" style="display:none;flex-direction:column;gap:14px">
-        <div class="section-title">Comprehension Questions</div>
+        <div class="section-title">Verständnisfragen</div>
         <div id="readQuestions"></div>
-        <button class="btn" id="readCheckBtn" onclick="readCheck()" disabled>Check answers</button>
+        <button class="btn" id="readCheckBtn" onclick="readCheck()" disabled>Antworten prüfen</button>
         <div id="readResult" style="display:none"></div>
-        <button class="btn secondary" id="readNewBtn" style="display:none" onclick="readReset()">🔄 New text</button>
+        <button class="btn secondary" id="readNewBtn" style="display:none" onclick="readReset()">🔄 Neuer Text</button>
       </div>
     </div>
   </div>
@@ -750,23 +753,23 @@
     </div>
     <!-- API Key Status (when set) -->
     <div id="apiKeyStatus" style="display:none;font-size:12px;color:var(--text-muted);text-align:right;padding:0 2px">
-      🟢 Gemini connected &nbsp;<button onclick="clearApiKey()" style="font-size:11px;background:none;border:none;color:var(--text-muted);cursor:pointer;text-decoration:underline">change</button>
+      🟢 Gemini verbunden &nbsp;<button onclick="clearApiKey()" style="font-size:11px;background:none;border:none;color:var(--text-muted);cursor:pointer;text-decoration:underline">ändern</button>
     </div>
     <!-- Word of Day -->
     <div id="wotdCard" class="wotd-card" style="display:none">
-      <div style="font-size:11px;font-weight:700;color:#818CF8;letter-spacing:1px">WORD OF THE DAY</div>
+      <div style="font-size:11px;font-weight:700;color:#818CF8;letter-spacing:1px">WORT DES TAGES</div>
       <div class="wotd-word" id="wotdWord"></div>
       <div style="font-size:13px;color:#C7D2FE" id="wotdTranslation"></div>
       <div style="font-size:13px;color:#A5B4FC;font-style:italic" id="wotdExample"></div>
       <div style="display:flex;gap:8px;margin-top:4px">
         <button class="listen-btn" style="font-size:12px;padding:5px 12px" onclick="speak(document.getElementById('wotdWord').textContent)">🔊 Listen</button>
-        <button class="listen-btn slow" style="font-size:12px;padding:5px 12px" onclick="addWotdToVocab()">+ Add to Vocab</button>
+        <button class="listen-btn slow" style="font-size:12px;padding:5px 12px" onclick="addWotdToVocab()">+ Zu Vokabeln</button>
       </div>
     </div>
     <!-- Daily goal -->
     <div class="card" style="padding:14px;gap:8px;display:flex;flex-direction:column">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <div style="font-size:13px;font-weight:700">🎯 Daily goal: <span id="pgGoalDone">0</span> / <span id="pgGoalTarget">10</span> words</div>
+        <div style="font-size:13px;font-weight:700">🎯 Tagesziel: <span id="pgGoalDone">0</span> / <span id="pgGoalTarget">10</span> Wörter</div>
         <div style="display:flex;gap:6px;align-items:center">
           <button style="font-size:11px;padding:3px 8px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);cursor:pointer" onclick="changeGoal(-5)">−5</button>
           <button style="font-size:11px;padding:3px 8px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);cursor:pointer" onclick="changeGoal(5)">+5</button>
@@ -777,26 +780,26 @@
     </div>
     <!-- Stats grid -->
     <div class="stat-grid">
-      <div class="stat-card"><div class="big" id="pgTotal">0</div><div class="lbl">Words</div></div>
-      <div class="stat-card"><div class="big" id="pgLearned">0</div><div class="lbl">Learned</div></div>
+      <div class="stat-card"><div class="big" id="pgTotal">0</div><div class="lbl">Wörter</div></div>
+      <div class="stat-card"><div class="big" id="pgLearned">0</div><div class="lbl">Gelernt</div></div>
       <div class="stat-card"><div class="big" id="pgStreak">0</div><div class="lbl">Streak 🔥</div></div>
-      <div class="stat-card"><div class="big" id="pgDays">0</div><div class="lbl">Days</div></div>
+      <div class="stat-card"><div class="big" id="pgDays">0</div><div class="lbl">Tage</div></div>
     </div>
     <!-- Quick actions -->
-    <div class="section-title">Quick Start</div>
+    <div class="section-title">Schnellstart</div>
     <div class="scenario-grid">
       <button class="scenario-btn" onclick="switchTabByName('chat')">💬<br>Chat</button>
-      <button class="scenario-btn" onclick="switchTabByName('vocab')">📖<br>Vocab</button>
-      <button class="scenario-btn" onclick="switchTabByName('practice')">✏️<br>Practice</button>
-      <button class="scenario-btn" onclick="switchTabByName('readlisten')">📚<br>Read</button>
-      <button class="scenario-btn" onclick="switchTabByName('pronunciation')">🎤<br>Speak</button>
-      <button class="scenario-btn" onclick="startPlacementTestFromHome()">🎓<br>Level Test</button>
+      <button class="scenario-btn" onclick="switchTabByName('vocab')">📖<br>Vokabeln</button>
+      <button class="scenario-btn" onclick="switchTabByName('practice')">✏️<br>Üben</button>
+      <button class="scenario-btn" onclick="switchTabByName('readlisten')">📚<br>Lesen</button>
+      <button class="scenario-btn" onclick="switchTabByName('pronunciation')">🎤<br>Sprechen</button>
+      <button class="scenario-btn" onclick="startPlacementTestFromHome()">🎓<br>Stufentest</button>
     </div>
     <!-- Vocab status bars -->
     <div class="card" style="padding:16px;gap:10px;display:flex;flex-direction:column">
-      <div class="section-title" style="font-size:14px">Words by status</div>
+      <div class="section-title" style="font-size:14px">Wörter nach Status</div>
       <div class="level-bar-row">
-        <span class="level-bar-label" style="width:60px;font-size:11px">Learned</span>
+        <span class="level-bar-label" style="width:60px;font-size:11px">Gelernt</span>
         <div class="level-bar-wrap"><div class="level-bar-fill pass" id="pgBarLearned" style="width:0%"></div></div>
         <span id="pgBarLearnedN" style="font-size:12px;color:var(--text-muted);width:30px;text-align:right">0</span>
       </div>
@@ -806,14 +809,14 @@
         <span id="pgBarProgN" style="font-size:12px;color:var(--text-muted);width:30px;text-align:right">0</span>
       </div>
       <div class="level-bar-row">
-        <span class="level-bar-label" style="width:60px;font-size:11px">New</span>
+        <span class="level-bar-label" style="width:60px;font-size:11px">Neu</span>
         <div class="level-bar-wrap"><div class="level-bar-fill" style="background:#6B7280" id="pgBarNew" style="width:0%"></div></div>
         <span id="pgBarNewN" style="font-size:12px;color:var(--text-muted);width:30px;text-align:right">0</span>
       </div>
     </div>
     <!-- Due words -->
     <div class="card" style="padding:16px;gap:10px;display:flex;flex-direction:column">
-      <div class="section-title" style="font-size:14px">Words to review next</div>
+      <div class="section-title" style="font-size:14px">Nächste Wiederholungen</div>
       <div id="pgDueWords" style="font-size:14px;color:var(--text-muted)">No vocabulary added yet.</div>
     </div>
     <!-- Weaknesses -->
@@ -853,7 +856,7 @@
       <div id="testQuestion" style="font-size:16px;font-weight:600;line-height:1.5"></div>
       <div id="testOptions"></div>
       <div id="testExplanation" class="explanation" style="display:none"></div>
-      <button class="btn" id="testNextBtn" style="display:none" onclick="testNext()">Next →</button>
+      <button class="btn" id="testNextBtn" style="display:none" onclick="testNext()">Weiter →</button>
     </div>
     <div id="testResultCard" class="card" style="display:none;flex-direction:column;gap:16px;align-items:center;padding:28px">
       <div style="font-size:32px">🎓</div>
@@ -862,19 +865,19 @@
       <div id="testResultDesc" style="text-align:center;font-size:14px;color:var(--text-muted);line-height:1.6;max-width:300px"></div>
       <div id="testLevelBars" style="width:100%;margin-top:4px"></div>
       <div style="font-size:13px;color:var(--text-muted)" id="testTotalScore"></div>
-      <button class="btn" style="margin-top:8px" onclick="resetPlacementTest()">🔄 Test again</button>
+      <button class="btn" style="margin-top:8px" onclick="resetPlacementTest()">🔄 Nochmal testen</button>
     </div>
   </div>
 
   <!-- SPEAK -->
   <div class="tab-content" id="tab-pronunciation">
     <div class="card" style="text-align:center;padding:24px;display:flex;flex-direction:column;gap:14px">
-      <div class="section-title">Practice Sentence</div>
-      <div class="pron-sentence" id="pronSentence">Press 🔄 to get a sentence</div>
+      <div class="section-title">Übungssatz</div>
+      <div class="pron-sentence" id="pronSentence">🔄 drücken für einen Satz</div>
       <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
         <button class="listen-btn" id="listenNormalBtn" onclick="listenToSentence(1.0)">🔊 Listen</button>
         <button class="listen-btn slow" id="listenSlowBtn" onclick="listenToSentence(0.6)">🐢 Slow</button>
-        <button class="btn secondary" style="width:auto;padding:8px 16px;font-size:13px" onclick="newPronSentence()">🔄 New</button>
+        <button class="btn secondary" style="width:auto;padding:8px 16px;font-size:13px" onclick="newPronSentence()">🔄 Neu</button>
       </div>
     </div>
     <div class="card" style="text-align:center;padding:24px;display:flex;flex-direction:column;gap:16px">
@@ -895,20 +898,20 @@
       </div>
     </div>
     <div class="card" id="pronResult" style="display:none;gap:14px;align-items:center">
-      <div class="section-title" style="align-self:flex-start">Your result</div>
+      <div class="section-title" style="align-self:flex-start">Dein Ergebnis</div>
       <div class="score-ring" id="scoreRing"><div class="score-num" id="scoreNum">–</div></div>
       <div id="pronFeedback" style="text-align:center;font-size:14px;line-height:1.6;color:var(--text-muted)"></div>
       <div id="wordDiff" class="word-diff" style="display:none"></div>
       <div id="pronTranscript" style="font-size:13px;background:var(--surface2);border-radius:8px;padding:10px;width:100%"></div>
       <div id="pronTips" style="display:none;width:100%;flex-direction:column;gap:8px"></div>
-      <button class="listen-btn" onclick="listenToSentence(1.0)" style="margin-top:4px">🔊 Hear correct version again</button>
+      <button class="listen-btn" onclick="listenToSentence(1.0)" style="margin-top:4px">🔊 Nochmal anhören</button>
     </div>
   </div>
 
 </div>
 
 <!-- Word tap popup -->
-<div id="selectionVocabBtn" style="display:none;position:fixed;z-index:9999;background:#4F46E5;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(79,70,229,0.5);white-space:nowrap" onclick="addSelectionToVocab()">+ Zu Vocab</div>
+<div id="selectionVocabBtn" style="display:none;position:fixed;z-index:9999;background:#4F46E5;color:#fff;border:none;border-radius:20px;padding:8px 16px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(79,70,229,0.5);white-space:nowrap" onclick="addSelectionToVocab()">+ Zu Vokabeln</div>
 
 <div id="wordPopup">
   <div style="display:flex;align-items:center;justify-content:space-between">
@@ -917,20 +920,19 @@
   </div>
   <div class="pw-trans" id="pwTrans"><div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0"></div></div>
   <div style="display:flex;gap:8px">
-    <button class="btn" style="font-size:13px;min-height:38px;padding:8px 12px" onclick="addWordFromPopup()">+ Zu Vocab</button>
+    <button class="btn" style="font-size:13px;min-height:38px;padding:8px 12px" onclick="addWordFromPopup()">+ Zu Vokabeln</button>
     <button class="btn secondary" style="font-size:13px;min-height:38px;padding:8px 12px" onclick="speak(document.getElementById('pwWord').textContent)">🔊</button>
   </div>
 </div>
 
 <nav class="bottom-nav">
-  <div class="footer-label">For my love ❤️</div>
   <div class="nav-row">
-    <button class="nav-btn" onclick="switchTab('home', this);renderProgress()"><span class="icon">🏠</span>Home</button>
+    <button class="nav-btn" onclick="switchTab('home', this);renderProgress()"><span class="icon">🏠</span>Start</button>
     <button class="nav-btn active" onclick="switchTab('chat', this)"><span class="icon">💬</span>Chat</button>
-    <button class="nav-btn" onclick="switchTab('vocab', this)"><span class="icon">📖</span>Vocab</button>
-    <button class="nav-btn" onclick="switchTab('practice', this)"><span class="icon">✏️</span>Practice</button>
-    <button class="nav-btn" onclick="switchTab('readlisten', this)"><span class="icon">📚</span>Read</button>
-    <button class="nav-btn" onclick="switchTab('pronunciation', this)"><span class="icon">🎤</span>Speak</button>
+    <button class="nav-btn" onclick="switchTab('vocab', this)"><span class="icon">📖</span>Vokabeln</button>
+    <button class="nav-btn" onclick="switchTab('practice', this)"><span class="icon">✏️</span>Üben</button>
+    <button class="nav-btn" onclick="switchTab('readlisten', this)"><span class="icon">📚</span>Lesen</button>
+    <button class="nav-btn" onclick="switchTab('pronunciation', this)"><span class="icon">🎤</span>Sprechen</button>
   </div>
 </nav>
 
@@ -1664,13 +1666,13 @@ function showNextCard() {
   const notLearned = vocab.filter(v => !v.learned);
   resetVocabVoice();
   if (vocab.length === 0) {
-    card.innerHTML = '<div class="tap-hint">Add vocabulary below to start</div>';
+    card.innerHTML = '<div class="tap-hint">Unten Vokabeln hinzufügen</div>';
     actions.style.display = 'none';
     voiceArea.style.display = 'none';
     cardFlipped = false; return;
   }
   if (notLearned.length === 0) {
-    card.innerHTML = '<div style="font-size:28px">🎉</div><div class="front-word">All done!</div><div class="tap-hint">Add more words below!</div>';
+    card.innerHTML = '<div style="font-size:28px">🎉</div><div class="front-word">Geschafft!</div><div class="tap-hint">Füge unten mehr Wörter hinzu!</div>';
     actions.style.display = 'none';
     voiceArea.style.display = 'none';
     return;
@@ -1717,9 +1719,9 @@ function updateEasyBtn() {
   if (!btn || !v) return;
   const c = v.correct || 0;
   const days = v.interval ? ` · in ${v.interval}d` : '';
-  if (c === 0) { btn.textContent = '✓ Correct'; btn.style.background = ''; return; }
+  if (c === 0) { btn.textContent = '✓ Leicht'; btn.style.background = ''; return; }
   const colors = ['', '#0369a1', '#0f766e', '#15803d'];
-  btn.textContent = `✓ Correct (${c}/3${days})`;
+  btn.textContent = `✓ Leicht (${c}/3${days})`;
   btn.style.background = colors[Math.min(c, 3)];
 }
 
@@ -1732,7 +1734,7 @@ function resetVocabVoice() {
   if (fb) { fb.style.display = 'none'; fb.textContent = ''; }
   if (st) st.textContent = '';
   const btn = document.getElementById('vocabMicBtn');
-  if (btn) { btn.textContent = '🎤 Speak the German word'; btn.style.borderColor = ''; btn.style.color = ''; }
+  if (btn) { btn.textContent = '🎤 Deutsches Wort sagen'; btn.style.borderColor = ''; btn.style.color = ''; }
 }
 
 function toggleVocabMic() {
@@ -1744,7 +1746,7 @@ function toggleVocabMic() {
   btn.textContent = '⏹ Stop';
   btn.style.borderColor = 'var(--danger)';
   btn.style.color = 'var(--danger)';
-  document.getElementById('vocabVoiceStatus').textContent = 'Listening…';
+  document.getElementById('vocabVoiceStatus').textContent = 'Zuhören…';
 
   vocabRecognition = new SR();
   vocabRecognition.lang = 'de-DE';
@@ -1775,7 +1777,7 @@ function stopVocabMic() {
   if (vocabRecognition) { try { vocabRecognition.abort(); } catch(e) {} vocabRecognition = null; }
   const btn = document.getElementById('vocabMicBtn');
   if (btn && btn.textContent.includes('Stop')) {
-    btn.textContent = '🎤 Speak the German word';
+    btn.textContent = '🎤 Deutsches Wort sagen';
     btn.style.borderColor = '';
     btn.style.color = '';
   }
@@ -1835,10 +1837,10 @@ async function addVocab() {
       vocab.push({ word, translation, example, learned: false });
     } catch(e) {
       showToast('Fehler beim Übersetzen: ' + e.message);
-      if (addBtn) { addBtn.disabled = false; addBtn.textContent = '+ Add'; }
+      if (addBtn) { addBtn.disabled = false; addBtn.textContent = '+ Hinzufügen'; }
       return;
     }
-    if (addBtn) { addBtn.disabled = false; addBtn.textContent = '+ Add'; }
+    if (addBtn) { addBtn.disabled = false; addBtn.textContent = '+ Hinzufügen'; }
   } else {
     vocab.push({ word, translation, learned: false });
   }
@@ -1870,7 +1872,7 @@ async function generateVocab(btn) {
     renderVocabStats();
     showNextCard();
   } catch(e) { alert('Error: ' + e.message); }
-  btn.disabled = false; btn.textContent = '✨ AI: Suggest 5 words';
+  btn.disabled = false; btn.textContent = '✨ KI: 5 Wörter vorschlagen';
 }
 
 // ── GRAMMAR ──
@@ -2057,7 +2059,7 @@ function showGrammarQuestion() {
         <div style="font-size:40px">${pct >= 80 ? '🎉' : pct >= 50 ? '👍' : '📚'}</div>
         <div style="font-size:22px;font-weight:700">${pct}%</div>
         <div style="color:var(--text-muted)">${grammarCorrect} of ${total} correct</div>
-        <button class="btn" onclick="startGrammar('${grammarTopic}')">New quiz — same topic</button>
+        <button class="btn" onclick="startGrammar('${grammarTopic}')">Neues Quiz — gleiches Thema</button>
         <button class="btn secondary" onclick="showTopicSelect()">Choose a different topic</button>
       </div>`;
     return;
@@ -2121,7 +2123,7 @@ Return ONLY valid JSON, no extra text:
     renderFillExercise(data.text);
   } catch(e) {
     area.innerHTML = `<div class="card" style="color:var(--danger)">Error: ${escHtml(e.message)}<br><br>
-      <button class="btn secondary" onclick="startFill('${topic}')">Retry</button></div>`;
+      <button class="btn secondary" onclick="startFill('${topic}')">Nochmal versuchen</button></div>`;
   }
 }
 
@@ -2140,8 +2142,8 @@ function renderFillExercise(text) {
     }
   });
   html += '</div>';
-  html += `<button class="btn" id="fillSubmitBtn" onclick="checkFill()" disabled style="margin-top:4px">Check answers</button>`;
-  html += `<button class="btn secondary" onclick="startFill('${fillTopic}')" style="margin-top:0">🔄 New text</button>`;
+  html += `<button class="btn" id="fillSubmitBtn" onclick="checkFill()" disabled style="margin-top:4px">Antworten prüfen</button>`;
+  html += `<button class="btn secondary" onclick="startFill('${fillTopic}')" style="margin-top:0">🔄 Neuer Text</button>`;
   html += `<button class="btn secondary" onclick="showFillTopicSelect()" style="margin-top:0">← Topics</button>`;
   document.getElementById('fillArea').innerHTML = `<div class="card" style="display:flex;flex-direction:column;gap:12px">${html}</div>`;
 }
@@ -2189,7 +2191,7 @@ function checkFill() {
   } else {
     if (ttsEnabled) speak('Perfect! All answers correct!');
   }
-  resultHtml += `<button class="btn" onclick="startFill('${fillTopic}')">🔄 New text — same topic</button>`;
+  resultHtml += `<button class="btn" onclick="startFill('${fillTopic}')">🔄 Neuer Text — same topic</button>`;
   resultHtml += `<button class="btn secondary" onclick="showFillTopicSelect()">← Choose topic</button>`;
   document.getElementById('fillArea').querySelector('.card').innerHTML += resultHtml;
 }
@@ -2388,7 +2390,7 @@ async function toggleRecording() {
   let gotAnyResult = false;
   document.getElementById('micBtn').classList.add('recording');
   document.getElementById('micBtn').textContent = '⏹';
-  document.getElementById('micStatus').textContent = 'Listening — speak now!';
+  document.getElementById('micStatus').textContent = 'Zuhören — jetzt sprechen!';
   document.getElementById('pronResult').style.display = 'none';
   document.getElementById('micHint').style.display = 'none';
   startVisualizer().catch(() => {});
@@ -2802,7 +2804,7 @@ function renderVocabQuizIntro() {
   document.getElementById('vocabQuizQuestion').style.display = 'none';
   document.getElementById('vocabQuizResult').style.display = 'none';
   const learned = vocab.filter(v => v.learned).length;
-  document.getElementById('vocabQuizLearnedBtn').textContent = `✅ Only learned words (${learned})`;
+  document.getElementById('vocabQuizLearnedBtn').textContent = `✅ Nur gelernte Wörter (${learned})`;
   document.getElementById('vocabQuizLearnedBtn').disabled = learned < 4;
 
   // Interest filter buttons
@@ -2850,7 +2852,7 @@ function showVocabQuizQuestion() {
   document.getElementById('vocabQuizQuestion').style.display = 'flex';
   document.getElementById('vocabQuizResult').style.display = 'none';
   document.getElementById('vocabQuizCounter').textContent = `${vocabQuizIdx + 1} / ${total}`;
-  document.getElementById('vocabQuizScore').textContent = `${vocabQuizCorrect} correct`;
+  document.getElementById('vocabQuizScore').textContent = `${vocabQuizCorrect} richtig`;
   document.getElementById('vocabQuizProgress').style.width = `${(vocabQuizIdx / total) * 100}%`;
   document.getElementById('vocabQuizWord').textContent = q.translation;
   document.getElementById('vocabQuizExample').textContent = q.example ? `„${q.example}"` : '';
@@ -2972,7 +2974,7 @@ seed:${seed}` }], 1000);
     listenDispEl.textContent = listenText;
     makeWordsTappable(listenDispEl);
     listenDispEl.style.display = 'none';
-    document.getElementById('listenShowTextBtn').textContent = '👁 Show text';
+    document.getElementById('listenShowTextBtn').textContent = '👁 Text anzeigen';
     document.getElementById('listenQuestionsBtn').style.display = 'none';
     speak(listenText, 0.9);
   } catch(e) {
@@ -3056,7 +3058,7 @@ function setWritePrompt(prompt) {
 function writeInputChanged() {
   const text = document.getElementById('writeInput').value.trim();
   const words = text ? text.split(/\s+/).length : 0;
-  document.getElementById('writeWordCount').textContent = words + ' words';
+  document.getElementById('writeWordCount').textContent = words + ' Wörter';
   document.getElementById('writeCheckBtn').disabled = words < 15;
 }
 
@@ -3103,7 +3105,7 @@ If the text is perfect, return {"errors":[],"corrected":"${text}"}` }], 1200);
 
 function writeReset() {
   document.getElementById('writeInput').value = '';
-  document.getElementById('writeWordCount').textContent = '0 words';
+  document.getElementById('writeWordCount').textContent = '0 Wörter';
   document.getElementById('writeCheckBtn').disabled = true;
   document.getElementById('writeResultCard').style.display = 'none';
   document.getElementById('writePromptHint').style.display = 'none';
@@ -3557,7 +3559,7 @@ function renderProgress() {
 
   const wDiv = document.getElementById('pgWeaknesses');
   const hasData = weaknesses.length > 0 || hardWords.length > 0;
-  document.getElementById('pgWeaknessCount').textContent = hasData ? weaknesses.length + hardWords.length + ' found' : '';
+  document.getElementById('pgWeaknessCount').textContent = hasData ? weaknesses.length + hardWords.length + ' gefunden' : '';
   document.getElementById('pgTrainBtn').style.display = hasData ? 'block' : 'none';
   document.getElementById('pgAdaptiveCard').style.display = 'none';
 
@@ -3814,7 +3816,7 @@ function showTestResult() {
   document.getElementById('testLevelBars').innerHTML = barsHtml;
 
   const totalCorrect = Object.values(testScores).reduce((a, b) => a + b, 0);
-  document.getElementById('testTotalScore').textContent = `Total: ${totalCorrect} of ${testQuestions.length} correct`;
+  document.getElementById('testTotalScore').textContent = `Gesamt: ${totalCorrect} von ${testQuestions.length} richtig`;
   document.getElementById('testResultCard').style.display = 'flex';
 }
 
