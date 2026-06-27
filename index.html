@@ -2187,9 +2187,9 @@ function checkFill() {
   </div>`;
   if (explanations.length) {
     resultHtml += `<div class="explanation">${explanations.join('<br><br>')}</div>`;
-    if (ttsEnabled) speak(explanations.map(e => e.replace(/<[^>]+>/g,'')).join('. '));
+    if (ttsEnabled) speakEN(explanations.map(e => e.replace(/<[^>]+>/g,'')).join('. '));
   } else {
-    if (ttsEnabled) speak('Perfect! All answers correct!');
+    if (ttsEnabled) speakEN('Perfect! All answers correct!');
   }
   resultHtml += `<button class="btn" onclick="startFill('${fillTopic}')">🔄 Neuer Text — same topic</button>`;
   resultHtml += `<button class="btn secondary" onclick="showFillTopicSelect()">← Choose topic</button>`;
@@ -2221,7 +2221,7 @@ function answerGrammar(chosen) {
   document.querySelector('#grammarArea .card').innerHTML += `
     <div class="explanation">${escHtml(q.explanation)}</div>
     <button class="btn" onclick="grammarIdx++;showGrammarQuestion()" style="margin-top:4px">${nextLabel}</button>`;
-  if (ttsEnabled) speak(q.explanation);
+  if (ttsEnabled) speakEN(q.explanation);
 }
 
 // ── SPEECH RECOGNITION ──
@@ -2897,7 +2897,7 @@ function answerVocabQuiz(chosen, correct) {
   expDiv.style.display = 'block';
   document.getElementById('vocabQuizNextBtn').style.display = 'block';
 
-  if (ttsEnabled) speak(correct);
+  if (ttsEnabled) speakEN(correct);
 }
 
 function vocabQuizNext() {
@@ -3038,7 +3038,7 @@ function listenCheck() {
   document.getElementById('listenResult').style.display = 'block';
   document.getElementById('listenCheckBtn').style.display = 'none';
   document.getElementById('listenNewBtn').style.display = 'block';
-  if (ttsEnabled) speak(`${correct} out of ${listenQuestionData.length} correct.`);
+  if (ttsEnabled) speakEN(`${correct} out of ${listenQuestionData.length} correct.`);
 }
 
 function listenReset() {
@@ -3171,7 +3171,7 @@ function checkDictation() {
     `<div style="text-align:center;margin-bottom:8px"><span style="font-size:24px">${icon}</span> <strong>${pct}%</strong></div>${html}`;
   document.getElementById('dictResult').style.display = 'flex';
   document.getElementById('dictCheckBtn').style.display = 'none';
-  if (mistakes === 0 && ttsEnabled) speak('Perfect!');
+  if (mistakes === 0 && ttsEnabled) speakEN('Perfect!');
   else speak(dictSentence, 0.85);
 }
 
