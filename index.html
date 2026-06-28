@@ -1311,8 +1311,8 @@ async function callAI(messages, maxTokens = 400) {
         { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: controller.signal }
       );
       clearTimeout(timer);
-      if (res.status === 429) { lastErr = `Rate limit (429) on ${model}`; waitMs = i < AI_MODELS.length ? 500 : 3000; continue; }
-      if (res.status === 503) { lastErr = `Service unavailable (503)`; waitMs = 500; continue; }
+      if (res.status === 429) { lastErr = `Rate limit (429) on ${model}`; waitMs = i < AI_MODELS.length ? 1000 : 30000; continue; }
+      if (res.status === 503) { lastErr = `Service unavailable (503)`; waitMs = 1000; continue; }
       if (res.status === 400 || res.status === 403) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.error?.message || `HTTP ${res.status} — check your API key`);
@@ -1330,7 +1330,7 @@ async function callAI(messages, maxTokens = 400) {
       if (status === 400 || status === 403) throw e;
     }
   }
-  throw new Error('AI not responding. Last error: ' + lastErr);
+  throw new Error('KI überlastet — bitte 1 Minute warten und nochmal versuchen. (' + lastErr + ')');
 }
 
 // ── TAB NAVIGATION ──
