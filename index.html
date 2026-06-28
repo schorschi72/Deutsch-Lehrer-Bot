@@ -1116,6 +1116,31 @@ function speakEN(text, rate = 0.95) {
 }
 const speakDE = speakEN;
 
+// speakMixed() = English text, but single-quoted words spoken in German voice
+// e.g. "'weil' is subordinating" → 'weil' in DE, rest in EN
+function speakMixed(text, rate = 0.95) {
+  if (!window.speechSynthesis || !ttsEnabled) return;
+  speechSynthesis.cancel();
+  const clean = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  if (!clean) return;
+  // Split on single-quoted segments like 'weil' or 'würde + Infinitiv'
+  const segments = clean.split(/('[^']{1,40}')/);
+  for (const seg of segments) {
+    if (!seg.trim()) continue;
+    const isQuoted = /^'[^']+'$/.test(seg);
+    const utt = new SpeechSynthesisUtterance(seg.replace(/'/g, '').trim());
+    if (!utt.text) continue;
+    if (isQuoted) {
+      utt.lang = 'de-DE'; utt.rate = 0.9;
+      if (ttsVoice) utt.voice = ttsVoice;
+    } else {
+      utt.lang = 'en-US'; utt.rate = rate;
+      if (ttsVoiceDE) utt.voice = ttsVoiceDE;
+    }
+    speechSynthesis.speak(utt);
+  }
+}
+
 function speakMsg(btn, text) {
   if (window.speechSynthesis?.speaking) { speechSynthesis.cancel(); btn.classList.remove('speaking'); return; }
   btn.classList.add('speaking');
@@ -2335,7 +2360,7 @@ function checkFill() {
   </div>`;
   if (explanations.length) {
     resultHtml += `<div class="explanation">${explanations.join('<br><br>')}</div>`;
-    if (ttsEnabled) speakEN(explanations.map(e => e.replace(/<[^>]+>/g,'')).join('. '));
+    if (ttsEnabled) speakMixed(explanations.map(e => e.replace(/<[^>]+>/g,'')).join('. '));
   } else {
     if (ttsEnabled) speakEN('Perfect! All answers correct!');
   }
@@ -2369,7 +2394,7 @@ function answerGrammar(chosen) {
   document.querySelector('#grammarArea .card').innerHTML += `
     <div class="explanation">${escHtml(q.explanation)}</div>
     <button class="btn" onclick="grammarIdx++;showGrammarQuestion()" style="margin-top:4px">${nextLabel}</button>`;
-  if (ttsEnabled) speakEN(q.explanation);
+  if (ttsEnabled) speakMixed(q.explanation);
 }
 
 // ── SPEECH RECOGNITION ──
