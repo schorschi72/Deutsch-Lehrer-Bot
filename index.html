@@ -1086,11 +1086,11 @@ function speak(text, rate = 0.95) {
   }
 }
 
-// speakEN() = English text, but single-quoted segments spoken in German voice
-// e.g. "'weil' is subordinating" → 'weil' in DE, rest in EN
+// speakEN() = English text with automatic German detection:
+// single-quoted segments, words with Umlauts/ß, and known German words → German voice
 function speakEN(text, rate = 0.95) {
   if (!window.speechSynthesis || !ttsEnabled) return;
-  const clean = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const clean = text.replace(/<[^>]+>/g, ' ').replace(/[→]/g, ': ').replace(/\s+/g, ' ').trim();
   if (!clean) return;
   speechSynthesis.cancel();
   if (isIOS && !ttsVoiceDE) {
@@ -1099,14 +1099,51 @@ function speakEN(text, rate = 0.95) {
                  v.find(x => x.lang === 'en-US') ||
                  v.find(x => x.lang.startsWith('en-')) || null;
   }
-  const segments = clean.split(/('[^']{1,40}')/);
-  const utts = [];
-  for (const seg of segments) {
-    if (!seg.trim()) continue;
-    const isQuoted = /^'[^']+'$/.test(seg);
-    const utt = new SpeechSynthesisUtterance(seg.replace(/'/g, '').trim());
-    if (!utt.text) continue;
-    if (isQuoted) {
+  // Unambiguously German words (not also common English words)
+  const DE_WORDS = new Set([
+    'der','das','dem','des','ein','eine','einen','einem','einer','eines',
+    'ich','du','er','wir','ihr','mich','dich','sich','uns','euch','mir','dir',
+    'nicht','kein','keine','keinen','keinem','keiner','keines',
+    'ist','sind','war','waren','wird','werden','wurde','wurden','hat','haben','hatte','hatten',
+    'kann','muss','darf','soll','mag','möchte','könnte','sollte','müsste','dürfte','würde',
+    'auf','aus','bei','mit','nach','seit','von','zu','vor','über','unter','zwischen','neben',
+    'hinter','durch','gegen','ohne','außer','wegen','trotz','während','statt',
+    'und','aber','oder','denn','weil','dass','wenn','als','ob','obwohl','damit','bevor',
+    'nachdem','also','jedoch','sondern','doch','zwar','nämlich',
+    'sehr','noch','schon','immer','nie','oft','gern','auch','nur','noch','dann','jetzt',
+    'heute','morgen','gestern','hier','dort','so','wie','wo','wann','warum','was','wer',
+    'bitte','danke','ja','nein','vielleicht','eigentlich','natürlich'
+  ]);
+  function isGerman(word) {
+    const w = word.toLowerCase().replace(/[.,;:!?()\[\]]/g, '');
+    return /[äöüßÄÖÜ]/.test(word) || DE_WORDS.has(w);
+  }
+  // Split first on single-quoted segments, then detect German word-by-word
+  const quotedParts = clean.split(/('[^']{1,40}')/);
+  const langSegments = []; // [{text, lang}]
+  for (const part of quotedParts) {
+    if (!part.trim()) continue;
+    if (/^'[^']+'$/.test(part)) {
+      langSegments.push({ text: part.replace(/'/g, '').trim(), lang: 'de' });
+      continue;
+    }
+    // Word-by-word detection, group consecutive same-language words
+    const tokens = part.split(/(\s+)/);
+    let curLang = 'en', curText = '';
+    for (const tok of tokens) {
+      if (!tok.trim()) { curText += tok; continue; }
+      const lang = isGerman(tok) ? 'de' : 'en';
+      if (lang !== curLang) {
+        if (curText.trim()) langSegments.push({ text: curText.trim(), lang: curLang });
+        curText = tok; curLang = lang;
+      } else { curText += tok; }
+    }
+    if (curText.trim()) langSegments.push({ text: curText.trim(), lang: curLang });
+  }
+  for (const seg of langSegments) {
+    if (!seg.text) continue;
+    const utt = new SpeechSynthesisUtterance(seg.text);
+    if (seg.lang === 'de') {
       utt.lang = 'de-DE'; utt.rate = 0.9;
       if (ttsVoice) utt.voice = ttsVoice;
     } else {
