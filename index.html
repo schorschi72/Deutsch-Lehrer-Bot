@@ -1086,45 +1086,21 @@ function speak(text, rate = 0.95) {
   }
 }
 
-// speakEN() = English voice (native language of the learner)
+// speakEN() = English text, but single-quoted segments spoken in German voice
+// e.g. "'weil' is subordinating" → 'weil' in DE, rest in EN
 function speakEN(text, rate = 0.95) {
   if (!window.speechSynthesis || !ttsEnabled) return;
   const clean = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
   if (!clean) return;
   speechSynthesis.cancel();
-  // iOS: voices load late — try to find English voice on-demand
   if (isIOS && !ttsVoiceDE) {
     const v = speechSynthesis.getVoices();
     ttsVoiceDE = v.find(x => x.lang === 'en-GB') ||
                  v.find(x => x.lang === 'en-US') ||
                  v.find(x => x.lang.startsWith('en-')) || null;
   }
-  const utt = new SpeechSynthesisUtterance(clean);
-  utt.lang = 'en-US';
-  utt.rate = rate;
-  utt.pitch = 1;
-  if (ttsVoiceDE) utt.voice = ttsVoiceDE;
-  if (isIOS) { speechSynthesis.resume(); }
-  speechSynthesis.speak(utt);
-  if (isIOS) {
-    const keepalive = setInterval(() => {
-      if (!speechSynthesis.speaking) { clearInterval(keepalive); return; }
-      speechSynthesis.pause(); speechSynthesis.resume();
-    }, 10000);
-    utt.onend = () => clearInterval(keepalive);
-  }
-}
-const speakDE = speakEN;
-
-// speakMixed() = English text, but single-quoted words spoken in German voice
-// e.g. "'weil' is subordinating" → 'weil' in DE, rest in EN
-function speakMixed(text, rate = 0.95) {
-  if (!window.speechSynthesis || !ttsEnabled) return;
-  speechSynthesis.cancel();
-  const clean = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-  if (!clean) return;
-  // Split on single-quoted segments like 'weil' or 'würde + Infinitiv'
   const segments = clean.split(/('[^']{1,40}')/);
+  const utts = [];
   for (const seg of segments) {
     if (!seg.trim()) continue;
     const isQuoted = /^'[^']+'$/.test(seg);
@@ -2361,7 +2337,7 @@ function checkFill() {
   </div>`;
   if (explanations.length) {
     resultHtml += `<div class="explanation">${explanations.join('<br><br>')}</div>`;
-    if (ttsEnabled) speakMixed(explanations.map(e => e.replace(/<[^>]+>/g,'')).join('. '));
+    if (ttsEnabled) speakEN(explanations.map(e => e.replace(/<[^>]+>/g,'')).join('. '));
   } else {
     if (ttsEnabled) speakEN('Perfect! All answers correct!');
   }
@@ -2395,7 +2371,7 @@ function answerGrammar(chosen) {
   document.querySelector('#grammarArea .card').innerHTML += `
     <div class="explanation">${escHtml(q.explanation)}</div>
     <button class="btn" onclick="grammarIdx++;showGrammarQuestion()" style="margin-top:4px">${nextLabel}</button>`;
-  if (ttsEnabled) speakMixed(q.explanation);
+  if (ttsEnabled) speakEN(q.explanation);
 }
 
 // ── SPEECH RECOGNITION ──
