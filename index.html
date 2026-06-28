@@ -1221,6 +1221,7 @@ const AI_MODELS = [
   'gemini-2.0-flash-lite',
   'gemini-2.5-flash',
   'gemini-2.0-flash',
+  'gemini-2.5-flash-lite-preview-06-17',
 ];
 
 // Helper: sleep that respects an AbortSignal
@@ -1237,7 +1238,7 @@ async function callAIStream(messages, maxTokens = 500, onChunk) {
   _cancelStream();
   _cancelBgAI();
   const key = getApiKey();
-  if (!key) { switchTab('home', document.querySelector('.nav-btn')); updateApiKeyUI(); throw new Error('No API key set'); }
+  if (!key) { switchTab('home', document.querySelector('.nav-btn')); updateApiKeyUI(); throw new Error('Kein API Key'); }
   const body = _buildGeminiBody(messages, maxTokens);
   const myCtrl = _streamAbortCtrl;
   // Cycle through all models; on 429 wait briefly then try next
@@ -1267,11 +1268,11 @@ async function callAIStream(messages, maxTokens = 500, onChunk) {
       resetChunkTimer(); // got headers — reset for stream body
       if (res.status === 429) {
         clearTimeout(chunkTimer);
-        lastErr = `Rate limit (429) on ${model}`;
-        waitMs = i < AI_MODELS.length ? 500 : 20000;
+        lastErr = `Rate limit (429) bei ${model}`;
+        waitMs = i < AI_MODELS.length ? 500 : 12000;
         continue;
       }
-      if (res.status === 503) { clearTimeout(chunkTimer); lastErr = `Unavailable (503)`; waitMs = 500; continue; }
+      if (res.status === 503) { clearTimeout(chunkTimer); lastErr = `Nicht verfügbar (503)`; waitMs = 500; continue; }
       if (!res.ok) {
         clearTimeout(chunkTimer);
         const err = await res.json().catch(() => ({}));
@@ -1299,13 +1300,13 @@ async function callAIStream(messages, maxTokens = 500, onChunk) {
         }
       }
       clearTimeout(chunkTimer);
-      if (!full) { lastErr = 'Empty response'; waitMs = 300; continue; }
+      if (!full) { lastErr = 'Leere Antwort'; waitMs = 300; continue; }
       return full;
     } catch(e) {
       clearTimeout(chunkTimer);
       if (e.name === 'AbortError') {
         if (myCtrl.signal.aborted) throw e;
-        lastErr = 'Timeout'; waitMs = 500;
+        lastErr = `Timeout`; waitMs = 500;
         continue;
       }
       throw e;
@@ -1336,8 +1337,8 @@ async function callAI(messages, maxTokens = 400) {
         { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: controller.signal }
       );
       clearTimeout(timer);
-      if (res.status === 429) { lastErr = `Rate limit (429) on ${model}`; waitMs = i < AI_MODELS.length ? 1000 : 30000; continue; }
-      if (res.status === 503) { lastErr = `Service unavailable (503)`; waitMs = 1000; continue; }
+      if (res.status === 429) { lastErr = `Rate limit (429) bei ${model}`; waitMs = i < AI_MODELS.length ? 500 : 3000; continue; }
+      if (res.status === 503) { lastErr = `Service nicht verfügbar (503)`; waitMs = 500; continue; }
       if (res.status === 400 || res.status === 403) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.error?.message || `HTTP ${res.status} — check your API key`);
@@ -1349,13 +1350,13 @@ async function callAI(messages, maxTokens = 400) {
       return content;
     } catch(e) {
       clearTimeout(timer);
-      if (e.name === 'AbortError') { lastErr = `Timeout on ${model}`; waitMs = 500; continue; }
+      if (e.name === 'AbortError') { lastErr = `Timeout bei ${model}`; waitMs = 500; continue; }
       lastErr = e.message;
       const status = e.status;
       if (status === 400 || status === 403) throw e;
     }
   }
-  throw new Error('KI überlastet — bitte 1 Minute warten und nochmal versuchen. (' + lastErr + ')');
+  throw new Error('KI antwortet nicht. Letzter Fehler: ' + lastErr);
 }
 
 // ── TAB NAVIGATION ──
