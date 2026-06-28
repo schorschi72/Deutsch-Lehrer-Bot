@@ -1312,7 +1312,7 @@ async function callAIStream(messages, maxTokens = 500, onChunk) {
       throw e;
     }
   }
-  throw new Error('KI-Dienst überlastet — bitte 30 Sekunden warten. (' + lastErr + ')');
+  throw new Error('Alle Modelle haben Rate-Limit — bitte 30 Sekunden warten. (' + lastErr + ')');
 }
 
 async function callAI(messages, maxTokens = 400) {
