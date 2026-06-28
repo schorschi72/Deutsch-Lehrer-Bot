@@ -2220,7 +2220,7 @@ function showGrammarQuestion() {
       <div class="quiz-question">${escHtml(q.question)}</div>
       <div class="options">${q.options.map((opt, i) => `<button class="option-btn" onclick="answerGrammar(${i})">${escHtml(opt)}</button>`).join('')}</div>
     </div>`;
-  if (ttsEnabled) speakEN(q.question.replace(/_+/g, 'blank'));
+  if (ttsEnabled) speak(q.question.replace(/_+/g, 'blank'));
 }
 
 function renderTopicGrid(containerId, fillMode = false) {
