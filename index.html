@@ -1193,10 +1193,9 @@ function _cancelStream() { _streamAbortCtrl.abort(); _streamAbortCtrl = new Abor
 // Ordered list of models to try — more options = more rate-limit headroom
 const AI_MODELS = [
   'gemini-2.5-flash-lite',
-  'gemini-2.0-flash-lite',
   'gemini-2.5-flash',
+  'gemini-2.0-flash-lite',
   'gemini-2.0-flash',
-  'gemini-2.5-flash-lite-preview-06-17',
 ];
 
 // Helper: sleep that respects an AbortSignal
@@ -1895,13 +1894,147 @@ async function generateVocab(btn) {
 // ── GRAMMAR ──
 
 const localQuestionBank = {
-  tenses:[
-    {question:"Fill in: She ___ to work every day.",options:["go","goes","going","gone"],correct:1,explanation:"Third person singular present simple takes -s: 'she goes'."},
-    {question:"Which sentence is correct?",options:["I am knowing her for years.","I have known her for years.","I know her since years.","I knew her for years."],correct:1,explanation:"'Have known' (present perfect) is used for states that started in the past and continue now."},
-    {question:"Fill in: By 8am tomorrow, I ___ my report.",options:["will finish","will have finished","am finishing","finished"],correct:1,explanation:"Future perfect ('will have finished') describes an action completed before a future point."},
-    {question:"While she ___ dinner, the phone rang.",options:["cooked","was cooking","has cooked","cooks"],correct:1,explanation:"Past continuous ('was cooking') describes an ongoing action interrupted by another."},
-    {question:"Fill in: He ___ here since 2019.",options:["lives","lived","has lived","is living"],correct:2,explanation:"Present perfect ('has lived') with 'since' for a state that started in the past and continues now."}
+  gender:[
+    {question:"Welcher Artikel ist richtig: ___ Hund bellt laut.",options:["Der","Die","Das","Den"],correct:0,explanation:"'Hund' (dog) is masculine: der Hund."},
+    {question:"Welcher Artikel ist richtig: ___ Kind spielt im Garten.",options:["Der","Die","Das","Dem"],correct:2,explanation:"'Kind' (child) is neuter: das Kind."},
+    {question:"Welcher Artikel ist richtig: ___ Frau liest ein Buch.",options:["Der","Die","Das","Den"],correct:1,explanation:"'Frau' (woman) is feminine: die Frau."},
+    {question:"Welcher Artikel passt? Ich kaufe ___ Apfel.",options:["einen","eine","ein","einem"],correct:0,explanation:"'Apfel' is masculine. Indefinite article in Akkusativ: einen."},
+    {question:"Welcher Artikel passt? Das ist ___ Buch.",options:["ein","eine","einen","einem"],correct:0,explanation:"'Buch' is neuter. Nominativ indefinite article: ein Buch."}
   ],
+  cases:[
+    {question:"Ergänze (Nominativ): ___ Mann kauft ein Auto.",options:["Der","Den","Dem","Des"],correct:0,explanation:"Subject of the sentence (Nominativ): der Mann."},
+    {question:"Ergänze (Akkusativ): Ich sehe ___ Mann.",options:["der","den","dem","des"],correct:1,explanation:"Direct object (Akkusativ): den Mann (masculine)."},
+    {question:"Ergänze (Dativ): Ich gebe ___ Frau das Buch.",options:["der","die","den","das"],correct:0,explanation:"Indirect object (Dativ): der Frau (feminine Dativ = der)."},
+    {question:"Welcher Fall ist richtig: Das Auto ___ Mannes ist rot.",options:["Nominativ","Akkusativ","Dativ","Genitiv"],correct:3,explanation:"'des Mannes' shows possession — that's Genitiv."},
+    {question:"Ergänze: Er hilft ___ Kind.",options:["das","dem","den","des"],correct:1,explanation:"'helfen' takes Dativ: dem Kind (neuter Dativ = dem)."}
+  ],
+  akkusativ:[
+    {question:"Ergänze: Ich kaufe ___ Buch.",options:["ein","einen","einem","eines"],correct:0,explanation:"'Buch' is neuter — Akkusativ neuter indefinite article = ein."},
+    {question:"Welche Präposition verlangt immer Akkusativ?",options:["mit","nach","für","bei"],correct:2,explanation:"'für' always takes Akkusativ. 'mit', 'nach', 'bei' take Dativ."},
+    {question:"Ergänze: Sie besucht ___ alten Mann.",options:["den","dem","der","des"],correct:0,explanation:"'Mann' is masculine — Akkusativ: den alten Mann."},
+    {question:"Ergänze: Er kauft ___ Freundin Blumen.",options:["seine","seiner","seinen","seinem"],correct:0,explanation:"'Freundin' is feminine — Akkusativ: seine Freundin."},
+    {question:"Welche Präposition verlangt KEINEN Akkusativ?",options:["ohne","durch","gegen","von"],correct:3,explanation:"'von' takes Dativ. 'ohne', 'durch', 'gegen' all take Akkusativ."}
+  ],
+  dativ:[
+    {question:"Welche Präposition verlangt immer Dativ?",options:["für","ohne","mit","durch"],correct:2,explanation:"'mit' always takes Dativ. 'für', 'ohne', 'durch' take Akkusativ."},
+    {question:"Ergänze: Ich fahre ___ meinem Bruder.",options:["mit","für","ohne","gegen"],correct:0,explanation:"'mit' + Dativ: mit meinem Bruder."},
+    {question:"Ergänze: Er gibt ___ Mutter ein Geschenk.",options:["seiner","seinen","seine","seines"],correct:0,explanation:"'Mutter' is feminine — Dativ: seiner Mutter."},
+    {question:"Ergänze: Das Buch gehört ___ Kind.",options:["das","dem","den","die"],correct:1,explanation:"'gehören' takes Dativ: dem Kind (neuter Dativ = dem)."},
+    {question:"Ergänze: Sie wohnt ___ ihrer Schwester.",options:["bei","für","gegen","ohne"],correct:0,explanation:"'bei' + Dativ: bei ihrer Schwester (she lives with her sister)."}
+  ],
+  present:[
+    {question:"Ergänze: Er ___ jeden Tag Kaffee.",options:["trinken","trinkt","trinkst","trinkе"],correct:1,explanation:"3rd person singular Präsens: er trinkt."},
+    {question:"Ergänze: Wir ___ Deutsch.",options:["lernt","lerne","lernen","lernst"],correct:2,explanation:"1st person plural Präsens: wir lernen."},
+    {question:"Ergänze: Du ___ sehr gut Gitarre.",options:["spielst","spielt","spielen","spiele"],correct:0,explanation:"2nd person singular Präsens: du spielst."},
+    {question:"Ergänze (unregelmäßig): Er ___ nach Berlin.",options:["fahren","fährst","fährt","fahrt"],correct:2,explanation:"'fahren' has a vowel change in 2nd/3rd person singular: er fährt."},
+    {question:"Ergänze: Ich ___ heute müde.",options:["bin","bist","ist","sind"],correct:0,explanation:"'sein' conjugation: ich bin."}
+  ],
+  perfekt:[
+    {question:"Ergänze: Ich ___ gestern ins Kino gegangen.",options:["habe","bin","hat","ist"],correct:1,explanation:"'gehen' uses 'sein' as auxiliary in Perfekt (movement verb)."},
+    {question:"Ergänze: Er ___ das Buch gelesen.",options:["ist","bin","hat","haben"],correct:2,explanation:"'lesen' uses 'haben' as auxiliary: er hat gelesen."},
+    {question:"Wie lautet das Partizip II von 'machen'?",options:["gemacht","gemachen","macht","gemakt"],correct:0,explanation:"Regular verbs form Partizip II with ge- + stem + -t: ge-mach-t."},
+    {question:"Wie lautet das Partizip II von 'fahren'?",options:["gefahrt","gefährt","gefahren","fahren"],correct:2,explanation:"Strong verb 'fahren' → gefahren (ge- + vowel change + -en)."},
+    {question:"Ergänze: Sie ___ nach Hause gefahren.",options:["hat","haben","ist","sind"],correct:2,explanation:"'fahren' (motion) uses 'sein': sie ist gefahren."}
+  ],
+  prateritum:[
+    {question:"Ergänze: Er ___ gestern krank. (sein)",options:["war","wurde","wurde","ist"],correct:0,explanation:"'sein' in Präteritum: ich/er/sie/es war."},
+    {question:"Ergänze: Sie ___ ein Buch. (haben)",options:["hatte","hat","haben","hatten"],correct:0,explanation:"'haben' in Präteritum 3rd person singular: sie hatte."},
+    {question:"Ergänze: Wir ___ nach Berlin. (fahren)",options:["fuhren","fahren","fuhrt","gefahren"],correct:0,explanation:"'fahren' Präteritum 1st person plural: wir fuhren."},
+    {question:"Wann benutzt man Präteritum statt Perfekt?",options:["In der Alltagssprache","In der Schriftsprache und bei 'sein'/'haben'","Nur in der Zukunft","Nur in Fragen"],correct:1,explanation:"Präteritum is used in written/formal language and always with 'sein', 'haben', and modal verbs."},
+    {question:"Ergänze: Er ___ nach Hause gehen. (müssen)",options:["musste","müsste","muss","gemüsst"],correct:0,explanation:"Modal verb 'müssen' in Präteritum: er musste."}
+  ],
+  modal:[
+    {question:"Ergänze: Du ___ jetzt nach Hause gehen.",options:["musst","muss","müssen","müsst"],correct:0,explanation:"'müssen' 2nd person singular Präsens: du musst."},
+    {question:"Ergänze: Er ___ sehr gut Deutsch sprechen.",options:["kann","können","kannst","könnst"],correct:0,explanation:"'können' 3rd person singular: er kann."},
+    {question:"Was bedeutet 'dürfen'?",options:["to have to","to want to","to be allowed to","to be able to"],correct:2,explanation:"'dürfen' means 'to be allowed to / may'."},
+    {question:"Ergänze: Ich ___ heute nicht arbeiten.",options:["soll","will","darf","kann"],correct:2,explanation:"'darf nicht' = is not allowed to. Context: permission denied."},
+    {question:"Wo steht der Infinitiv bei Modalverben?",options:["Am Anfang","Am Ende des Satzes","Direkt nach dem Subjekt","Vor dem Modalverb"],correct:1,explanation:"With modal verbs, the infinitive goes to the end: Ich kann heute kommen."}
+  ],
+  wordorder:[
+    {question:"Welche Satzstellung ist richtig?",options:["Heute ich gehe ins Kino.","Heute gehe ich ins Kino.","Ins Kino ich heute gehe.","Gehe ich heute ins Kino."],correct:1,explanation:"V2 rule: the verb is always in position 2. When an adverb starts the sentence, subject and verb invert."},
+    {question:"Ergänze die richtige Wortstellung: Ich weiß, dass er ___.",options:["kommt morgen","morgen kommt","kommt er morgen","er kommt morgen"],correct:1,explanation:"In subordinate clauses (nach 'dass'), the verb goes to the end: dass er morgen kommt."},
+    {question:"Wie lautet die W-Frage? (nach Hause / gehen / du / wann)",options:["Wann du gehst nach Hause?","Wann gehst du nach Hause?","Wann nach Hause gehst du?","Du gehst wann nach Hause?"],correct:1,explanation:"Questions: question word → verb → subject: Wann gehst du nach Hause?"},
+    {question:"Wo steht 'nicht' im Satz: 'Ich gehe ins Kino'?",options:["Ich nicht gehe ins Kino.","Ich gehe nicht ins Kino.","Ich gehe ins nicht Kino.","Nicht ich gehe ins Kino."],correct:1,explanation:"'nicht' usually comes before what it negates, or at the end of the sentence."},
+    {question:"Welche Konjunktion verändert die Wortstellung NICHT?",options:["weil","dass","aber","obwohl"],correct:2,explanation:"Coordinating conjunctions (und, aber, oder, denn, sondern) don't change word order. 'weil', 'dass', 'obwohl' send the verb to the end."}
+  ],
+  separable:[
+    {question:"Ergänze: Ich ___ um 7 Uhr ___. (aufstehen)",options:["aufstehe / auf","stehe / auf","stehen / auf","stehe / aufstehe"],correct:1,explanation:"Separable verbs split: prefix goes to the end. 'Ich stehe um 7 Uhr auf.'"},
+    {question:"Ergänze: Er ___ das Licht ___. (anmachen)",options:["macht / an","anmacht / –","machen / an","anmache / an"],correct:0,explanation:"'anmachen' → er macht an. The prefix 'an' goes to the end."},
+    {question:"Wie lautet das Partizip II von 'anrufen'?",options:["angerufen","gerufenan","angeruft","geruft"],correct:0,explanation:"Separable verbs: ge- goes between prefix and stem: an-ge-rufen."},
+    {question:"Ergänze: Sie ___ um 20 Uhr ___. (fernsehen)",options:["sieht / fern","fernsieht / –","sehen / fern","sieht / fern"],correct:0,explanation:"'fernsehen' → sie sieht fern. Prefix 'fern' goes to the end."},
+    {question:"Ergänze: Ich ___ dich morgen ___. (abholen)",options:["hole / ab","abhole / –","holen / ab","hole / abholen"],correct:0,explanation:"'abholen' → ich hole ab. The prefix 'ab' goes to the end."}
+  ],
+  adjectives:[
+    {question:"Ergänze: Das ist ein ___ Auto. (schnell)",options:["schnelles","schnelle","schnellem","schnellen"],correct:0,explanation:"After indefinite article with neuter noun (Nominativ): -es ending → schnelles Auto."},
+    {question:"Ergänze: Er sieht den ___ Mann. (alt)",options:["alten","alter","alte","altes"],correct:0,explanation:"After definite article in Akkusativ masculine: -en → den alten Mann."},
+    {question:"Ergänze: Sie wohnt in einer ___ Stadt. (schön)",options:["schönen","schöne","schöner","schönes"],correct:0,explanation:"After indefinite article in Dativ feminine: -en → in einer schönen Stadt."},
+    {question:"Ergänze: Das ___ Kind spielt draußen. (klein)",options:["kleine","kleinen","kleinem","kleines"],correct:0,explanation:"After definite article in Nominativ neuter: -e → das kleine Kind."},
+    {question:"Ergänze: Er trinkt ___ Kaffee. (heiß, kein Artikel)",options:["heißem","heißer","heißen","heiß"],correct:2,explanation:"No article before masculine Akkusativ: strong ending -en → heißen Kaffee."}
+  ],
+  comparatives:[
+    {question:"Ergänze: Berlin ist ___ als München. (groß)",options:["größer","großer","am größten","größten"],correct:0,explanation:"Comparative of 'groß': größer (with umlaut)."},
+    {question:"Ergänze: Das ist das ___ Auto. (schnell — Superlativ)",options:["schnellste","am schnellsten","schnellster","am schnellste"],correct:1,explanation:"Superlative as adverb or predicate: am schnellsten."},
+    {question:"Wie lautet der Komparativ von 'gut'?",options:["guter","mehr gut","besser","am besten"],correct:2,explanation:"Irregular comparative: gut → besser → am besten."},
+    {question:"Ergänze: Er ist ___ groß wie sie.",options:["so","als","wie","mehr"],correct:0,explanation:"Equality comparison: genauso/so + adjective + wie."},
+    {question:"Ergänze: Sie arbeitet ___ als ich. (viel)",options:["mehr","viel","mehrer","vieler"],correct:0,explanation:"Irregular comparative: viel → mehr."}
+  ],
+  passive:[
+    {question:"Bilde das Passiv: 'Man baut das Haus.'",options:["Das Haus wird gebaut.","Das Haus ist gebaut.","Das Haus hat gebaut.","Das Haus baut werden."],correct:0,explanation:"Vorgangspassiv Präsens: werden + Partizip II → Das Haus wird gebaut."},
+    {question:"Ergänze: Das Buch ___ gestern ___. (schreiben, Passiv Präteritum)",options:["wurde / geschrieben","war / geschrieben","ist / geschrieben","hat / geschrieben"],correct:0,explanation:"Passiv Präteritum: wurde + Partizip II → wurde geschrieben."},
+    {question:"Was ist der Unterschied: 'Das Fenster wird geöffnet' vs. 'Das Fenster ist geöffnet'?",options:["Kein Unterschied","Vorgangspassiv vs. Zustandspassiv","Präsens vs. Perfekt","Aktiv vs. Passiv"],correct:1,explanation:"'wird geöffnet' = Vorgangspassiv (the action of opening). 'ist geöffnet' = Zustandspassiv (the resulting state)."},
+    {question:"Ergänze: Er ___ vom Arzt untersucht.",options:["wird","ist werden","hat","wurde worden"],correct:0,explanation:"Vorgangspassiv Präsens: wird + Partizip II."},
+    {question:"Wie fragt man nach dem Handelnden im Passiv?",options:["mit 'von' + Dativ","mit 'für' + Akkusativ","mit 'durch' + Akkusativ","mit 'zu' + Dativ"],correct:0,explanation:"The agent in passive is introduced with 'von' + Dativ: Das Buch wurde von der Autorin geschrieben."}
+  ],
+  relative:[
+    {question:"Ergänze: Das ist der Mann, ___ ich kenne.",options:["der","den","dem","dessen"],correct:1,explanation:"'Mann' is masculine. In the relative clause it's the direct object (Akkusativ): den ich kenne."},
+    {question:"Ergänze: Die Frau, ___ ich geholfen habe, ist meine Nachbarin.",options:["die","der","den","deren"],correct:1,explanation:"'helfen' takes Dativ. 'Frau' is feminine — Dativ: der ich geholfen habe."},
+    {question:"Ergänze: Das Kind, ___ Hund bellt, heißt Max.",options:["das","dessen","dem","den"],correct:1,explanation:"Possession in relative clause: 'dessen' (neuter/masculine Genitiv)."},
+    {question:"Ergänze: Das ist die Stadt, ___ ich lebe.",options:["wo / in der","in die","die","wo"],correct:0,explanation:"Location: 'in der' or 'wo' are both correct. 'Die Stadt, in der ich lebe' is standard."},
+    {question:"Welcher Relativsatz ist grammatisch richtig?",options:["Der Zug, der kommt gerade an.","Der Zug, der gerade ankommt.","Der Zug, den kommt gerade an.","Der Zug, der gerade kommt an."],correct:1,explanation:"In relative clauses the verb goes to the end: der gerade ankommt."}
+  ],
+  reflexive:[
+    {question:"Ergänze: Ich ___ morgens um 7 Uhr. (sich waschen)",options:["wasche mich","wasche mir","mich wasche","mir wasche"],correct:0,explanation:"Reflexive Akkusativ: ich wasche mich."},
+    {question:"Ergänze: Er ___ die Hände. (sich waschen — Dativ)",options:["wäscht sich","wäscht mir","wäscht ihm","waschen sich"],correct:0,explanation:"When the body part is mentioned, the reflexive pronoun is Dativ: er wäscht sich die Hände."},
+    {question:"Ergänze: Wir ___ auf die Party. (sich freuen)",options:["freuen uns","freut uns","freuen sich","freuen euch"],correct:0,explanation:"'freuen' is reflexive: wir freuen uns."},
+    {question:"Ergänze: Du ___ im Spiegel. (sich ansehen)",options:["siehst dich an","siehst an dich","siehst mir an","siehst dich"],correct:0,explanation:"Separable reflexive verb: du siehst dich an."},
+    {question:"Welches Verb ist KEIN reflexives Verb?",options:["sich setzen","sich ärgern","sich beeilen","gehen"],correct:3,explanation:"'gehen' is not reflexive. 'sich setzen', 'sich ärgern', 'sich beeilen' all require a reflexive pronoun."}
+  ],
+  negation:[
+    {question:"Ergänze: Ich habe ___ Hunger. (kein/nicht)",options:["kein","nicht","keine","nichts"],correct:0,explanation:"'Hunger' is a noun (masculine) → negate with 'kein': ich habe keinen Hunger."},
+    {question:"Ergänze: Sie kommt ___ heute. (nicht/kein)",options:["nicht","kein","keine","nichts"],correct:0,explanation:"Negating a verb or adverb: use 'nicht'."},
+    {question:"Wo steht 'nicht' wenn es das ganze Prädikat negiert?",options:["Am Anfang","Vor dem Subjekt","Am Ende (vor Infinitiv/Partizip)","Direkt nach dem Verb"],correct:2,explanation:"'nicht' for general negation goes to the end, before infinitive or participle: Ich kann heute nicht kommen."},
+    {question:"Ergänze: Ich habe ___ gesehen. (niemand/nichts — für Dinge)",options:["niemanden","nichts","nicht","keinen"],correct:1,explanation:"'nichts' negates things/ideas. 'niemand' negates people."},
+    {question:"Ergänze: Er isst ___ Fleisch. (Vegetarier — kein/nicht)",options:["kein","nicht","nichts","niemand"],correct:0,explanation:"Negating a noun (Fleisch = neuter): kein Fleisch → er isst kein Fleisch."}
+  ],
+  prepositions:[
+    {question:"Ergänze: Das Buch liegt ___ dem Tisch. (Lage — auf/in/an)",options:["auf","in","an","über"],correct:0,explanation:"'auf' + Dativ for location ON a surface: Das Buch liegt auf dem Tisch."},
+    {question:"Ergänze: Ich stelle das Buch ___ das Regal. (Bewegung)",options:["in","im","ins","an"],correct:2,explanation:"Movement into an enclosed space: 'in' + Akkusativ → ins (= in das) Regal."},
+    {question:"Ergänze: Sie hängt das Bild ___ die Wand. (Bewegung)",options:["an die","an der","auf die","auf der"],correct:0,explanation:"Movement toward a surface: 'an' + Akkusativ → an die Wand."},
+    {question:"Ergänze: Das Bild hängt ___ Wand. (Lage)",options:["an die","an der","auf der","auf die"],correct:1,explanation:"Location at a surface: 'an' + Dativ → an der Wand."},
+    {question:"Welche Wechselpräposition verwendet man für 'between'?",options:["über","neben","zwischen","unter"],correct:2,explanation:"'zwischen' means 'between' and is a two-way preposition (Dativ for location, Akkusativ for movement)."}
+  ],
+  future:[
+    {question:"Ergänze: Ich ___ morgen nach Berlin fahren.",options:["werde","wird","werden","werdet"],correct:0,explanation:"Futur I: werden + Infinitiv. 1st person singular: ich werde."},
+    {question:"Welche Aussage ist eine typische Futur-I-Verwendung?",options:["Ich fahre morgen nach Berlin.","Es wird morgen regnen.","Ich bin gestern gefahren.","Er fährt jeden Tag."],correct:1,explanation:"Futur I is often used for predictions: 'Es wird morgen regnen.'"},
+    {question:"Ergänze: Er ___ nächste Woche kommen.",options:["wird","werde","werden","werdet"],correct:0,explanation:"Futur I 3rd person singular: er wird kommen."},
+    {question:"Wie kann man Zukunft OHNE 'werden' ausdrücken?",options:["Mit Präteritum","Mit Präsens + Zeitangabe","Mit Perfekt","Gar nicht möglich"],correct:1,explanation:"German often uses Präsens + time adverb for future: 'Ich fahre morgen nach Berlin.'"},
+    {question:"Ergänze: Bis nächste Woche ___ er das Projekt fertig ___. (Futur II)",options:["wird / gehabt haben","wird / fertig sein","wird / fertig haben","werde / haben"],correct:2,explanation:"Futur II: werden + Partizip II + haben/sein → er wird fertig haben."}
+  ],
+  conjunctions:[
+    {question:"Ergänze: Ich gehe nicht raus, ___ es regnet.",options:["weil","aber","und","denn"],correct:0,explanation:"'weil' (because) is subordinating → verb goes to the end: weil es regnet."},
+    {question:"Was ist der Unterschied zwischen 'weil' und 'denn'?",options:["Kein Unterschied","'weil' → Verb am Ende; 'denn' → normale Wortstellung","'denn' → Verb am Ende; 'weil' → normal","Beides geht immer"],correct:1,explanation:"'weil' is subordinating (verb-final). 'denn' is coordinating (normal word order)."},
+    {question:"Ergänze: ___ ich Zeit habe, komme ich vorbei.",options:["Wenn","Wann","Als","Ob"],correct:0,explanation:"'wenn' = when/if (repeated or future). 'als' = when (single past event). 'wann' = in questions."},
+    {question:"Ergänze: Ich weiß nicht, ___ er kommt.",options:["ob","wenn","dass","weil"],correct:0,explanation:"'ob' introduces indirect yes/no questions: Ich weiß nicht, ob er kommt. (= whether he's coming)"},
+    {question:"Welche Konjunktion verändert die Wortstellung NICHT?",options:["weil","obwohl","aber","damit"],correct:2,explanation:"'aber' (but) is coordinating → normal word order. 'weil', 'obwohl', 'damit' are subordinating → verb goes to end."}
+  ],
+  konjunktiv:[
+    {question:"Ergänze: Wenn ich Zeit ___, würde ich helfen.",options:["hätte","habe","hatte","haben"],correct:0,explanation:"Konjunktiv II of 'haben': ich hätte. Used in hypothetical if-clauses."},
+    {question:"Ergänze: Er ___ gern nach Paris reisen.",options:["würde","wäre","hätte","wird"],correct:0,explanation:"'würde + Infinitiv' is the standard Konjunktiv II form for most verbs."},
+    {question:"Ergänze: Wenn ich du ___, würde ich das nicht machen.",options:["wäre","sei","bin","war"],correct:0,explanation:"'wäre' is Konjunktiv II of 'sein' (used for all persons in hypotheticals)."},
+    {question:"Wofür benutzt man Konjunktiv II?",options:["Für Tatsachen","Für Wünsche, Hypothesen und höfliche Bitten","Für die Vergangenheit","Für Befehle"],correct:1,explanation:"Konjunktiv II expresses wishes, hypothetical situations, and polite requests."},
+    {question:"Ergänze (höfliche Bitte): ___ du mir bitte helfen?",options:["Könntest","Kannst","Konntest","Könnt"],correct:0,explanation:"Polite request with Konjunktiv II: 'Könntest du…?' (Could you…?)"}
+  ]
+};
   present_perfect:[
     {question:"Fill in: I ___ never ___ sushi before.",options:["have / eaten","did / eat","had / eaten","am / eating"],correct:0,explanation:"'Have eaten' – present perfect for a life experience up to now."},
     {question:"Which is correct with 'already'?",options:["She already left.","She has already left.","She already leaves.","She was already left."],correct:1,explanation:"'Already' pairs with present perfect to show something happened sooner than expected."},
@@ -2030,9 +2163,9 @@ async function startGrammar(topic) {
     showGrammarQuestion();
     // Silently fetch AI questions for next round in background
     const seed = Math.floor(Math.random() * 99999);
-    callAI([{ role: 'user', content: `Create 5 fresh multiple-choice grammar questions about ${grammarTopics[topic].desc} for an intermediate English learner. (seed:${seed})
-Return ONLY a valid JSON array:
-[{"question":"Fill in: She ___ to work every day.","options":["go","goes","going","gone"],"correct":1,"explanation":"Third person singular present simple needs -s."}]` }], 900)
+    callAI([{ role: 'user', content: `Erstelle 5 neue Multiple-Choice-Grammatikfragen auf Deutsch über: ${grammarTopics[topic].desc}. Die Fragen sollen auf Deutsch sein, die Erklärungen auf Englisch. (seed:${seed})
+Gib NUR ein gültiges JSON-Array zurück:
+[{"question":"Ergänze: Sie ___ jeden Tag zur Arbeit.","options":["geht","gehen","gehst","gegangen"],"correct":0,"explanation":"Third person singular present: 'sie geht' (she goes)."}]` }], 900)
       .then(reply => {
         try {
           const qs = JSON.parse(extractJSON(reply, 'array'));
@@ -2046,9 +2179,9 @@ Return ONLY a valid JSON array:
   const avoidHint = usedQuestions[topic].length > 0
     ? `\nDo NOT reuse any of these sentences: ${usedQuestions[topic].slice(-10).join(' | ')}` : '';
   try {
-    const reply = await callAI([{ role: 'user', content: `Create 5 fresh multiple-choice grammar questions about ${grammarTopics[topic].desc} for an intermediate English learner. (seed:${seed})${avoidHint}
-Return ONLY a valid JSON array, nothing else:
-[{"question":"Fill in: She ___ to work every day.","options":["go","goes","going","gone"],"correct":1,"explanation":"With 'she/he/it' in present simple, the verb takes -s: 'She goes to work every day.'"}]` }], 900);
+    const reply = await callAI([{ role: 'user', content: `Erstelle 5 neue Multiple-Choice-Grammatikfragen auf Deutsch über: ${grammarTopics[topic].desc}. Fragen auf Deutsch, Erklärungen auf Englisch. (seed:${seed})${avoidHint}
+Gib NUR ein gültiges JSON-Array zurück:
+[{"question":"Ergänze: Sie ___ jeden Tag zur Arbeit.","options":["geht","gehen","gehst","gegangen"],"correct":0,"explanation":"Third person singular present: 'sie geht' (she goes)."}]` }], 900);
     grammarQuestions = JSON.parse(extractJSON(reply, 'array'));
     usedQuestions[topic].push(...grammarQuestions.map(q => q.question));
     showGrammarQuestion();
@@ -2127,10 +2260,9 @@ async function startFill(topic) {
   const seed = Math.floor(Math.random() * 99999);
   try {
     const reply = await callAI([{ role: 'user', content:
-      `Create a fill-in-the-blank exercise for an intermediate English learner about ${grammarTopics[topic].desc}.
-Write 3–5 natural sentences. Replace exactly 5 words/phrases with ___. For each blank provide 3 options (only 1 correct).
-Return ONLY valid JSON, no extra text:
-{"text":"She ___ to work every day. It ___ raining when she arrived.","blanks":[{"options":["travels","travel","travelling"],"correct":0,"explanation":"Third person singular present simple needs -s."},{"options":["was","is","were"],"correct":0,"explanation":"Past continuous: 'was raining' describes ongoing action in the past."}]}
+      `Erstelle einen deutschen Lückentext (3–5 Sätze) zum Thema: ${grammarTopics[topic].desc}. Ersetze genau 5 Wörter/Phrasen durch ___. Für jede Lücke gib 3 Optionen an (nur 1 richtig). Erklärungen auf Englisch.
+Gib NUR gültiges JSON zurück:
+{"text":"Sie ___ jeden Tag zur Arbeit. Es ___ gestern, als sie ankam.","blanks":[{"options":["geht","gehen","gehst"],"correct":0,"explanation":"Third person singular present: 'sie geht'."},{"options":["regnete","regnet","geregnet"],"correct":0,"explanation":"Simple past (Präteritum) for weather descriptions in narrative."}]}
 (seed:${seed})`
     }], 900);
     const data = JSON.parse(extractJSON(reply, 'object'));
@@ -2975,9 +3107,9 @@ async function startListening(topic) {
   try {
     const seed = Math.floor(Math.random() * 99999);
     const raw = await callAI([{ role: 'user', content:
-      `Write a natural German listening text about "${topic}" (120–150 words, B1–B2 level). Then create 4 multiple-choice comprehension questions IN ENGLISH with 3 options each.
-Return ONLY valid JSON, no markdown:
-{"text":"Der vollständige Hörtext auf Deutsch...","questions":[{"question":"What did...?","options":["A","B","C"],"correct":0,"explanation":"The text says..."}]}
+      `Schreibe einen natürlichen deutschen Hörtext über "${topic}" (120–150 Wörter, Niveau B1–B2). Erstelle dann 4 Multiple-Choice-Verständnisfragen auf Deutsch mit je 3 Optionen. Erklärungen auf Englisch.
+Gib NUR gültiges JSON zurück, kein Markdown:
+{"text":"Der vollständige Hörtext auf Deutsch...","questions":[{"question":"Was hat...?","options":["A","B","C"],"correct":0,"explanation":"The text mentions..."}]}
 seed:${seed}` }], 1000);
     const data = JSON.parse(extractJSON(raw, 'object'));
     if (!data.text || !data.questions?.length) throw new Error('Invalid');
@@ -3406,9 +3538,9 @@ Return ONLY the German text, no title, no JSON.`}], 200);
 
     // Step 2: get questions in background
     const qRaw = await callAI([{role:'user',content:
-      `Based on this German text:\n"${currentReadText}"\n\nCreate 3 comprehension questions IN ENGLISH with 3 answer options each.
-Return ONLY valid JSON array:
-[{"question":"What...?","options":["A","B","C"],"correct":0,"explanation":"The text says..."}]`}], 500);
+      `Basierend auf diesem deutschen Text:\n"${currentReadText}"\n\nErstelle 3 Verständnisfragen auf Deutsch mit je 3 Antwortmöglichkeiten. Erklärungen auf Englisch.
+Gib NUR ein gültiges JSON-Array zurück:
+[{"question":"Was...?","options":["A","B","C"],"correct":0,"explanation":"The text states..."}]`}], 500);
     readQuestionData = JSON.parse(extractJSON(qRaw,'array'));
     readAnswers = new Array(readQuestionData.length).fill(null);
   } catch(e) {
@@ -3623,11 +3755,11 @@ async function startWeaknessTraining() {
 
   try {
     const raw = await callAI([{ role: 'user', content:
-      `You are a German language coach. Analyze these learner weaknesses and give a short personal feedback IN ENGLISH (2-3 sentences), then suggest 2 specific exercises to improve.
-Weaknesses:\n${profile}
-Return ONLY valid JSON:
-{"feedback":"You are struggling with...","exercises":[{"label":"Practice: Cases","action":"grammar","topic":"cases"},{"label":"Vocab review","action":"vocab"}]}
-action is one of: "grammar" (with topic key), "vocab", "fill" (with topic key), "dictation".` }], 400);
+      `Du bist ein Deutschlehrer. Analysiere diese Schwächen des Lernenden und gib ein kurzes persönliches Feedback auf Englisch (2-3 Sätze), dann schlage 2 konkrete Übungen vor.
+Schwächen:\n${profile}
+Gib NUR gültiges JSON zurück:
+{"feedback":"You are struggling with...","exercises":[{"label":"Übung: Kasus","action":"grammar","topic":"cases"},{"label":"Vokabeln wiederholen","action":"vocab"}]}
+action ist eines von: "grammar" (mit topic-Schlüssel), "vocab", "fill" (mit topic-Schlüssel), "dictation".` }], 400);
     const data = JSON.parse(extractJSON(raw, 'object'));
 
     document.getElementById('pgAdaptiveLoading').style.display = 'none';
